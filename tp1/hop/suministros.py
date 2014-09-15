@@ -1,36 +1,48 @@
 from abc import ABCMeta, abstractmethod
 
+SUMINISTROS = AGUA, LUZ, FERTILIZANTE, ANTIBIOTICOS = range(4)
+SUMINISTROS_TEXTO = "Agua", "Luz", "Fertilizante", "Antibióticos"
+ACCIONES = AUMENTAR, DISMINUIR = range(2)
 
-class Suministro(metaclass=ABCMeta):
-    def __init__(self, nombre, actuador):
-        self.nombre = nombre
+ACCIONES_VALIDAS = [(AGUA, AUMENTAR), (LUZ, AUMENTAR), (LUZ, DISMINUIR), (FERTILIZANTE, AUMENTAR), (ANTIBIOTICOS, AUMENTAR)]
+
+ACTUADORES = {AGUA: MockActuador(), LUZ: MockActuador(), FERTILIZANTE: MockActuador(), ANTIBIOTICOS: MockActuador()}
+
+class AccionFactory:
+    def __init__(self):
+        pass
+
+    def get_accion(recurso, efecto_deseado, cantidad):
+        if (recurso, efecto_deseado) not in ACCIONES_VALIDAS:
+            raise ValueError("Combinación no válida de acción y recurso")
+        if efecto_deseado == AUMENTAR:
+            return AccionAumentar(ACTUADORES[recurso])
+        elif efecto_deseado == DISMINUIR:
+            return AccionDisminuir(ACTUADORES[recurso])
+        else:
+            raise ValueError("No debería pasar")
+
+
+class Accion(metaclass=ABCMeta):
+    def __init__(self, actuador):
         self.actuador = actuador
 
-
-class RecursoAdministrable(Suministro):
-    def suministrar(self):
-        self.actuador.suministrar()
-
-
-class RecursoRegulable(Suministro):
-    def aumentar(self):
-        self.actuador.agregar()
-
-    def disminuir(self):
-        self.actuador.disminuir()
-
-
-class ActuadorRecursoAdministrable(metaclass=ABCMeta):
     @abstractmethod
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def suministrar(self):
+    def ejecutar(self):
         pass
 
 
-class ActuadorRecursoRegulable(metaclass=ABCMeta):
+class AccionAumentar(Accion):
+    def ejecutar(self):
+        actuador.aumentar()
+
+
+class AccionDisminuir(Accion):
+    def ejecutar(self):
+        actuador.disminuir()
+
+
+class Actuador(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self):
         pass
@@ -44,15 +56,7 @@ class ActuadorRecursoRegulable(metaclass=ABCMeta):
         pass
 
 
-class MockActuadorRecursoAdministrable(ActuadorRecursoAdministrable):
-    def __init__(self):
-        pass
-
-    def suministrar(self):
-        pass
-
-
-class MockActuadorRecursoRegulable(ActuadorRecursoRegulable):
+class MockActuador(Actuador):
     def __init__(self):
         pass
 
@@ -61,9 +65,3 @@ class MockActuadorRecursoRegulable(ActuadorRecursoRegulable):
 
     def disminuir(self):
         pass
-
-
-SUMINISTROS=[Suministro("Agua", MockActuadorRecursoAdministrable()),
-             Suministro("Luz y calor", MockActuadorRecursoRegulable()),
-             Suministro("Fertilizante", MockActuadorRecursoAdministrable()),
-             Suministro("Antibióticos", MockActuadorRecursoAdministrable())]

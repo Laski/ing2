@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from suministros import SUMINISTROS
 
 
 class PlanMaestro:
@@ -25,37 +26,9 @@ class PlanDeSuministros:
         self.plan_maestro = plan_maestro
         self.suministros = suministros
 
-    def que_hacer(self, plan_maestro, estadio_fenologico):
+    def que_recomendas(self, estadio_fenologico, estado_actual):
         estado_deseado = self.plan_maestro.estado_deseado(estadio_fenologico)
         acciones_recomendadas = None
         #TODO: implementar logica
         return acciones_recomendadas
-
-
-class Accion(metaclass=ABCMeta):
-    def __init__(self, suministro):
-        self.suministro = suministro
-
-    @abstractmethod
-    def ejecutar(self):
-        pass
-
-
-class AccionSuministrar(Accion):
-    def ejecutar(self):
-        suministro.suministrar()
-
-
-class AccionAumentar(Accion):
-    def ejecutar(self):
-        suministro.aumentar()
-
-
-class AccionMantener(Accion):
-    def ejecutar(self):
-        pass
-
-
-class AccionDisminuir(Accion):
-    def ejecutar(self):
-        suministro.disminuir()
+        
