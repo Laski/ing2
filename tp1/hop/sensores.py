@@ -2,37 +2,78 @@ from abc import ABCMeta, abstractmethod
 
 from estados import EstadoSuelo, EstadoMeteorologico
 
-
-class SensorSuelo(metaclass=ABCMeta):
-    @abstractmethod
-    def __init__(self):
-        pass
-
-    @property   # para que sea de solo lectura
-    @abstractmethod
-    def estado(self):
-        # devuelve un EstadoSuelo
-        pass
+UNIDADES = MILILITROS, LUMENS, PH = range(3)
 
 
-class CentralMeteorologica(metaclass=ABCMeta):
-    @abstractmethod
-    def __init__(self):
-        pass
+class Medida:
+    def __init__(self, cantidad, unidad):
+        self._cantidad = cantidad
+        self._unidad = unidad
 
     @property
+    def cantidad(self):
+        return self._cantidad
+
+    @property
+    def unidad(self):
+        return self._unidad
+
+    # para que sean comparables:
+    def __lt__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad < other.cantidad
+
+    def __le__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad <= other.cantidad
+
+    def __eq__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad == other.cantidad
+
+    def __ge__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad >= other.cantidad
+
+    def __gt__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad > other.cantidad
+
+    def __ne__(self, other):
+        self.verificar_unidad(other)
+        return self.cantidad != other.cantidad
+
+    def verificar_unidad(self, other):
+        if self.unidad != other.unidad:
+            raise TypeError("Intentando comparar medidas de unidades distintas")
+
+
+class InterfazSensor(metaclass=ABCMeta):
     @abstractmethod
-    def estado(self):
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def medir(self):
+        # devuelve una Medida
+        pass
+
+
+class InterfazCentralMeteorologica(metaclass=ABCMeta):
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def estado_actual(self):
         # devuelve un EstadoMeteorologico
         pass
 
-    @property
     @abstractmethod
     def estimacion_estados_futuros(self):
-        # debería devolver una lista de 24 objetos EstadoMeteorologico
+        # devuelve una lista de 24 objetos EstadoMeteorologico
         pass
 
-    @property
     @abstractmethod
     def hora_oficial(self):
         pass
@@ -58,7 +99,7 @@ class MockCentralMeteorologica(CentralMeteorologica):
         self._hora_oficial = hora_oficial
 
     @property
-    def estado(self):
+    def estado_actual(self):
         return self._estado
 
     @property

@@ -1,5 +1,59 @@
 from abc import ABCMeta, abstractmethod
 from suministros import SUMINISTROS
+import interfaz_usuario
+
+
+class Supervisor(metaclass=ABCMeta): # ex-filtro
+    def __init__(self, sensor, suministrador_exceso, suministrador_defecto):
+        self.sensor = sensor
+        self.suministrador_exceso = suministrador_exceso
+        self.suministrador_defecto = suministrador_defecto
+
+    def tick(self):
+        medida = self.sensor.medir()
+        if self.falta(medida):
+            self.suministrador_defecto.alertar()
+        elif self.sobra(medida):
+            self.suministrador_exceso.alertar()
+
+    @abstractmethod
+    def falta(self, medida):
+        pass
+
+    @abstractmethod
+    def sobra(self, medida):
+        pass
+
+
+class SupervisorMinMax(Supervisor):
+    def __init__(self, sensor, suministrador_exceso, suministrador_defecto, minimo, maximo):
+        super().__init__(sensor, suministrador_exceso, suministrador_defecto)
+        if minimo > maximo:
+            raise ValueError("Mínimo es mayor que máximo")
+        self.minimo = minimo
+        self.maximo = maximo
+
+    def falta(self, medida):
+        return medida < self.minimo
+
+    def sobra(self, medida):
+        return medida > self.maximo
+
+
+class Suministrador:
+    def __init__(self, actuador, medida_minima, responsable_secundario):
+        self.actuador = actuador
+        self.medida_minima = medida_minima
+        self.responsable_secundario = responsable_secundario
+
+    def alertar(self):
+        respuesta_usuario = interfaz_usuario.ejecutar_intervencion()
+        if respuesta_usuario == interfaz_usuario.NO:
+            return
+        elif respuesta_usuario == interfaz_usuario.TIMEOUT:
+            if self.responsable_secundario.debo_cancelar_suministro():
+                return
+        self.actuador.ejecutar(self.medida_minima.cantidad)
 
 
 class PlanMaestro:
@@ -19,16 +73,3 @@ class PlanMaestro:
 
     def temperatura_aceptada(self, estadio):
         return self.estado_deseado(estadio).temperatura
-
-
-class PlanDeSuministros:
-    def __init__(self, plan_maestro, suministros):
-        self.plan_maestro = plan_maestro
-        self.suministros = suministros
-
-    def que_recomendas(self, estadio_fenologico, estado_actual):
-        estado_deseado = self.plan_maestro.estado_deseado(estadio_fenologico)
-        acciones_recomendadas = None
-        #TODO: implementar logica
-        return acciones_recomendadas
-        
