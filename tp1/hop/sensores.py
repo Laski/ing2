@@ -48,12 +48,11 @@ class Medida:
             raise TypeError("Intentando comparar medidas de unidades distintas")
 
 
-class InterfazSensor(metaclass=ABCMeta):
-    @abstractmethod
+class InterfazSensor:
+
     def __init__(self):
         pass
 
-    @abstractmethod
     def medir(self):
         # devuelve una Medida
         pass
@@ -79,7 +78,7 @@ class InterfazCentralMeteorologica(metaclass=ABCMeta):
         pass
 
 
-class MockSensorSuelo(object):
+class MockSensorSuelo:
     def __init__(self, humedad_percibida, PH_percibido, temperatura_percibida):
         self._estado = EstadoSuelo(humedad_percibida, PH_percibido, temperatura_percibida)
 
@@ -88,7 +87,7 @@ class MockSensorSuelo(object):
         return self._estado
 
 
-class MockCentralMeteorologica(object):
+class MockCentralMeteorologica:
     def __init__(self, temperatura_percibida, humedad_percibida, luz_percibida, hora_oficial,
                  estimaciones_temperatura, estimaciones_humedad, estimaciones_luz):
         self._estado = EstadoMeteorologico(temperatura_percibida, humedad_percibida, luz_percibida)

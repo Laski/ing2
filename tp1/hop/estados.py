@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 class EstadioPrincipal:
     def __init__(self, nombre):
         self.nombre = nombre
