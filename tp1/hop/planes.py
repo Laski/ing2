@@ -41,19 +41,25 @@ class SupervisorMinMax(Supervisor):
 
 
 class Suministrador:
-    def __init__(self, actuador, medida_minima, responsable_secundario):
+    def __init__(self, actuador, medida_minima, responsables):
         self.actuador = actuador
         self.medida_minima = medida_minima
-        self.responsable_secundario = responsable_secundario
+        self.responsables = responsables
 
     def alertar(self):
-        respuesta_usuario = interfaz_usuario.ejecutar_intervencion()
-        if respuesta_usuario == interfaz_usuario.NO:
-            return
-        elif respuesta_usuario == interfaz_usuario.TIMEOUT:
-            if self.responsable_secundario.debo_cancelar_suministro():
+        for responsable in responsables:
+            respuesta = responsable.debo_cancelar_suministro(self)
+            if respuesta == SI:
                 return
+            elif respuesta == NO:
+                break
         self.actuador.ejecutar(self.medida_minima.cantidad)
+
+
+class Responsable(metaclass=ABCMeta): # interfaz
+    @abstracmethod
+    def debo_cancelar_suministro(self, suministrador):
+        pass
 
 
 class PlanMaestro:
