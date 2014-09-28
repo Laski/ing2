@@ -3,7 +3,7 @@ from suministros import SUMINISTROS
 import interfaz_usuario
 
 
-class Supervisor(metaclass=ABCMeta): # ex-filtro
+class Supervisor(metaclass=ABCMeta):  # ex-filtro
     def __init__(self, sensor, suministrador_exceso, suministrador_defecto):
         self.sensor = sensor
         self.suministrador_exceso = suministrador_exceso

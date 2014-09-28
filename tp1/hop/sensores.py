@@ -79,7 +79,7 @@ class InterfazCentralMeteorologica(metaclass=ABCMeta):
         pass
 
 
-class MockSensorSuelo(SensorSuelo):
+class MockSensorSuelo(object):
     def __init__(self, humedad_percibida, PH_percibido, temperatura_percibida):
         self._estado = EstadoSuelo(humedad_percibida, PH_percibido, temperatura_percibida)
 
@@ -88,7 +88,7 @@ class MockSensorSuelo(SensorSuelo):
         return self._estado
 
 
-class MockCentralMeteorologica(CentralMeteorologica):
+class MockCentralMeteorologica(object):
     def __init__(self, temperatura_percibida, humedad_percibida, luz_percibida, hora_oficial,
                  estimaciones_temperatura, estimaciones_humedad, estimaciones_luz):
         self._estado = EstadoMeteorologico(temperatura_percibida, humedad_percibida, luz_percibida)

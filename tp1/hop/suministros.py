@@ -6,7 +6,6 @@ ACCIONES = AUMENTAR, DISMINUIR = range(2)
 
 ACCIONES_VALIDAS = [(AGUA, AUMENTAR), (LUZ, AUMENTAR), (LUZ, DISMINUIR), (FERTILIZANTE, AUMENTAR), (ANTIBIOTICOS, AUMENTAR)]
 
-ACTUADORES = {AGUA: MockActuador(), LUZ: MockActuador(), FERTILIZANTE: MockActuador(), ANTIBIOTICOS: MockActuador()}
 
 class AccionFactory:
     def __init__(self):
@@ -65,3 +64,5 @@ class MockActuador(Actuador):
 
     def disminuir(self):
         pass
+
+ACTUADORES = {AGUA: MockActuador(), LUZ: MockActuador(), FERTILIZANTE: MockActuador(), ANTIBIOTICOS: MockActuador()}
