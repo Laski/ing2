@@ -1,7 +1,7 @@
 \section{Diseño}
 En esta sección vamos a abocarnos en la tarea de explicar el diseño que pensamos y desarrollamos para el sistema.
 
-\subsction{Timer}
+\subsection{Timer}
 
 \subsection{Sensores}
 
@@ -12,7 +12,12 @@ En esta sección vamos a abocarnos en la tarea de explicar el diseño que pensam
 \subsection{Situación: nueva medición de humedad}
 Vamos a tomar un caso para ejemplificar el comportamiento del sistema al recibir una nueva medición y su consecuente resolución.
 
-\includegraphics[width=\textwidth]{./imagenes/secuencia_alerta}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/secuencia_suministro1.png}
+  \caption{Diagrama de secuencia suministro}
+  \label{fig:sec_sum1}
+\end{figure}
 
 A medida que transcurre el tiempo, el temporizador envía el mensaje de actualización a los distintos supervisores. 
 Los supervisores a su vez, se encargan de revisar el estado de los distintos sensores para decidir si alertar o no en caso de un estado no deseado.
