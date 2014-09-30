@@ -53,3 +53,12 @@ coverage.xml
 docs/_build/
 
 *.idea*
+
+*.aux
+
+*.out
+
+tp1/informe/maintp1.synctex.gz
+
+
+tp1/informe/maintp1.pdf

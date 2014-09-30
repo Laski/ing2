@@ -1,20 +1,61 @@
 \section{Diseño}
 En esta sección vamos a abocarnos en la tarea de explicar el diseño que pensamos y desarrollamos para el sistema.
 
+
+\subsection{Sensores, Actuadores y Responsables}
+Comenzamos con una de las partes fundamentales del sistema que es la medición de los sensores y la consecuente ejecución de un actuador. \newline
+
+ 
+En un comienzo encaramos el diseño de esta parte del sistema pensando a los distintos sensores como observadores del Plan Maestro. Esta idea fue luego descartada por no tener ninguna razón para sacarle provecho al patrón observer y porque convertía al Plan Maestro en un objeto con demasiadas responsabilidades (conocer los sensores, sus estados, los estadíos de la planta, etc).
+
+A su vez, pensamos diseñar los distintos planes de suministro con un strategy pattern con la idea de que sean extensibles esos planes, pero finalmente concluímos que no era necesario.\newline
+
+
+ 
+Otro error común que tuvimos a la hora de pensar el diseño fue el de discriminar parte del dominio de una mala manera. Por ejemplo, separando entre actuadores regulables y actuadores suministrables. Esto vino de la mano de pensar la modernización de los recursos como recursos suministrables y regulables. Esta idea también fue eliminada por generar una buena cantidad de objetos cuya escénica era la misma pero estaban separados, generando así que al momento de modificar código tengamos que reemplazarlo en varios lugares al mismo tiempo.\newline
+
+ 
+En la figura 1 puede verse el diagrama de clases elegido luego de todas estas discusiones y reformas.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/clases2.jpg}
+  \caption{Diagrama de Clases}
+  \label{fig:sec_sum1}
+\end{figure}
+
+
+\newpage Vamos a profundizar en cada objeto:
+
+\begin{itemize}
+\item \textbf{InterfazSensor:} Este objeto tiene como colaborador interno a un sensor (de humedad, suelo, etc) y nos brinda una interfaz sencilla para comunicarnos y obtener la medición correspondiente a ese sensor.
+
+\item \textbf{InterfazActuador:} Al igual que para los sensores, este objeto nos brinda una interfaz sencilla para interactuar con un actuador, que es colaborador interno del objeto InterfazActuador. Ambas soluciones pueden interpretarse como un adapter pattern.
+
+\item \textbf{Supervisor:} Esta es una clase de la cual heredan los distintos supervisores que vayan a usarse. Un supervisor se encarga de interpretar las mediciones y alertar en caso de que sea necesario realizar una acción. Para esto cuenta con 2 colaboradores: un suministrador por falta y un suministrador por exceso. Es el primer eslabón en la cadena de decisión.
+
+\item \textbf{Suministrador:} Es el encargado de recibir una alerta por parte del supervisor y tomar la decisión final de ejecutar o no, la acción requerida. Para esto cuenta con una colección de responsables, que son objetos capaces de responder a la consulta de si efectivizar o no la acción. Por ejemplo, un responsable es el usuario (que se le consulta a través de una interfaz), otro es el responsable de la Central Meteorológica. De esta forma, en una posible versión futura, el sistema permite la integración de nuevos módulos de consulta para automatizar las decisiones.
+
+\item \textbf{Responsable:} Como se vio recién, esta es una interfaz que la implementarán aquellos objetos que cumplan el rol de responder ante la consulta de si realizar o no una tarea. 
+\end{itemize}
+Para entender mejor el funcionamiento, más adelante se detalla un diagram de secuencia correspondiente a una nueva medición de humedad.
+
+
 \subsection{Timer}
+Una vez que concluimos en utilizar ese diseño para los sensores y actuadores del sistema, nos encontramos con la dificultad de pensar quien tomará el rol de avisar a los distintos supervisores que es momento de supervisar. La solución apareció bastante rápido y se trata de un timer y un observer pattern.
 
-\subsection{Sensores}
+El timer es un objeto observable y los supervisores implementan la interfaz de observadores. De esta forma, los distintos supervisores se registran con el timer y este les avisa cada cierta cantidad de tiempo que es momento de supervisar.
 
-\subsection{Actuadores}
+Esta solución nos permite variar la cantidad de supervisores en caso de que se aumenten los sensores que se utilizan.
 
-\subsection{Interfaz de Usuario}
+
 
 \subsection{Situación: nueva medición de humedad}
 Vamos a tomar un caso para ejemplificar el comportamiento del sistema al recibir una nueva medición y su consecuente resolución.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{./imagenes/secuencia_suministro1.png}
+  \includegraphics[width=1\textwidth]{./imagenes/secuencia_suministro1.png}
   \caption{Diagrama de secuencia suministro}
   \label{fig:sec_sum1}
 \end{figure}
