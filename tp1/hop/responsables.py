@@ -17,7 +17,7 @@ class ResponsableUsuario(Responsable):
 
     def debo_cancelar_suministro(self, suministrador):
         actuador = suministrador.actuador
-        cantidad = suministrador.medida_minima
+        cantidad = suministrador.medida
         return self.interfaz_usuario.consultar(actuador.nombre, cantidad)
 
 

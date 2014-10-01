@@ -78,7 +78,7 @@ class MockCentralMeteorologica(InterfazCentralMeteorologica):
 
 
 
-MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12)    # son las doce
+MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12)    # son las doce. siempre.
 
 MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
                  PH: MockSensor(MOCK_ESTADO_SUELO.PH),

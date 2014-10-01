@@ -12,6 +12,9 @@ class Actuador(metaclass=ABCMeta):
     def __init__(self, nombre, suministro):
         self.nombre = nombre
         self.suministro = suministro
+        
+    def __hash__(self):
+        return hash(self.nombre)
 
     @property
     def medida_minima(self):

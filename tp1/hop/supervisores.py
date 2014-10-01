@@ -54,8 +54,9 @@ class SupervisorHora(Supervisor):
 
 
 class Suministrador:
-    def __init__(self, actuador, responsables):
+    def __init__(self, actuador, medida, responsables):
         self.actuador = actuador
+        self.medida = medida
         self.responsables = responsables
 
     def alerta(self):
@@ -69,7 +70,7 @@ class Suministrador:
                 pass
             else:
                 raise ValueError("Respuesta inválida de un responsable")
-        self.actuador.ejecutar(self.actuador.medida_minima.cantidad)
+        self.actuador.ejecutar(self.medida.cantidad)
 
 
 class SuministradorNulo(Suministrador):
