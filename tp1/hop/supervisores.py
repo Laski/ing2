@@ -3,7 +3,7 @@ from responsables import SI, NO, TIMEOUT
 
 
 class Supervisor(metaclass=ABCMeta):  # ex-filtro
-    def __init__(self, sensor, suministrador_exceso, suministrador_defecto, observable):
+    def __init__(self, sensor, suministrador_defecto, suministrador_exceso, observable):
         self.sensor = sensor
         self.suministrador_exceso = suministrador_exceso
         self.suministrador_defecto = suministrador_defecto
@@ -26,8 +26,8 @@ class Supervisor(metaclass=ABCMeta):  # ex-filtro
 
 
 class SupervisorMinMax(Supervisor):
-    def __init__(self, sensor, suministrador_exceso, suministrador_defecto, minimo, maximo):
-        super().__init__(sensor, suministrador_exceso, suministrador_defecto)
+    def __init__(self, sensor, suministrador_defecto, suministrador_exceso, observable, minimo, maximo):
+        super().__init__(sensor, suministrador_defecto, suministrador_exceso, observable)
         if minimo > maximo:
             raise ValueError("Mínimo es mayor que máximo")
         self.minimo = minimo
@@ -41,22 +41,22 @@ class SupervisorMinMax(Supervisor):
 
 
 class SupervisorHora(Supervisor):
-    def __init__(self, sensor, suministrador_exceso, suministrador_defecto, horas_aumento, horas_disminucion):
-        super().__init__(sensor, suministrador_exceso, suministrador_defecto)
-        self.horas_aumento = horas_aumento
-        self.horas_disminucion = horas_disminucion
+    def __init__(self, sensor, suministrador, horas, observable):
+        super().__init__(sensor, suministrador, SuministradorNulo(), observable)
+        self.horas = horas
 
     def falta(self, hora):
-        return hora in self.horas_aumento
+        return hora in self.horas
 
     def sobra(self, hora):
-        return hora in self.horas_disminucion
+        # siempre "falta", la logica de aumentar o disminuir esta en el actuador
+        return False
 
 
 class Suministrador:
-    def __init__(self, actuador, medida_minima, responsables):
+    def __init__(self, actuador, responsables):
         self.actuador = actuador
-        self.medida_minima = medida_minima
+        self.medida_minima = actuador.medida_minima
         self.responsables = responsables
 
     def alerta(self):
@@ -71,3 +71,8 @@ class Suministrador:
             else:
                 raise ValueError("Respuesta inválida de un responsable")
         self.actuador.ejecutar(self.medida_minima.cantidad)
+
+
+class SuministradorNulo(Suministrador):
+    def alerta(self):
+        pass

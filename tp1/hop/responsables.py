@@ -40,5 +40,5 @@ class MockInterfazUsuario:
         return TIMEOUT      # usuario que no hace nada
 
 
-RESPONSABLE_USUARIO = ResponsableUsuario(MockInterfazUsuario(MOCK_CENTRAL_METEOROLOGICA))
-RESPONSABLE_CENTRAL_METEOROLOGICA = ResponsableCentralMeteorologica()
+MOCK_RESPONSABLE_USUARIO = ResponsableUsuario(MockInterfazUsuario())
+MOCK_RESPONSABLE_CENTRAL_METEOROLOGICA = ResponsableCentralMeteorologica(MOCK_CENTRAL_METEOROLOGICA)

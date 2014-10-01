@@ -7,6 +7,9 @@ class Suministro:
         self.nombre = nombre
         self.medida_minima = medida_minima
 
+    def __hash__(self):
+        return hash(self.nombre)
+
 
 class Actuador(metaclass=ABCMeta):
     def __init__(self, nombre, suministro):
@@ -33,8 +36,9 @@ FERTILIZANTE = Suministro("Fertilizante", Medida(5, CM3))
 ANTIBIOTICOS = Suministro("Antibióticos", Medida(5, CM3))
 SUMINISTROS = AGUA, LUZ, FERTILIZANTE, ANTIBIOTICOS
 
-ACCIONES = REGAR, AUMENTAR_LUZ, DISMINUIR_LUZ, AGREGAR_FERTILIZANTE, AGREGAR_ANTIBIOTICOS = range(5)
-ACCIONES_TEXTO = "Regar", "Aumentar luz", "Disminuir luz", "Agregar fertilizante", "Agregar antibióticos"
+ACCIONES            = REGAR,   AUMENTAR_LUZ,   DISMINUIR_LUZ,   AGREGAR_FERTILIZANTE,   AGREGAR_ANTIBIOTICOS = range(5)
+ACCIONES_TEXTO      = "Regar", "Aumentar luz", "Disminuir luz", "Agregar fertilizante", "Agregar antibióticos"
+ACCIONES_SUMINISTRO = AGUA,    LUZ,            LUZ,             FERTILIZANTE,           ANTIBIOTICOS
 ACTUADORES = {}
 for accion in ACCIONES:
-    ACTUADORES[accion] = MockActuador(ACCIONES_TEXTO[accion], )
+    ACTUADORES[accion] = MockActuador(ACCIONES_TEXTO[accion], ACCIONES_SUMINISTRO[accion])

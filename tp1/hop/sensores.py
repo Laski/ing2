@@ -1,10 +1,9 @@
 from abc import ABCMeta, abstractmethod
-from datetime import time
 from estados import Medida, MOCK_ESTADO_SUELO, MOCK_ESTADO_METEOROLOGICO, PORCIENTO, LUMENS
 
 LLUVIA = Medida(100.0, PORCIENTO)     # qué porcentaje de humedad se considera lluvia
 SOL    = Medida(100.0, LUMENS)        # qué cantidad de luz se considera sol
-MEDICIONES_SUELO = HUMEDAD, PH, TEMPERATURA = range(3)
+MEDICIONES = HUMEDAD, PH, TEMPERATURA, HORA = range(4)
 
 
 class InterfazSensor(metaclass=ABCMeta):
@@ -79,8 +78,10 @@ class MockCentralMeteorologica(InterfazCentralMeteorologica):
         return self._hora_oficial
 
 
-MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
-                 PH: MockSensor(MOCK_ESTADO_SUELO.PH),
-                 TEMPERATURA: MockSensor(MOCK_ESTADO_SUELO.temperatura)}
 
 MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12)    # son las doce
+
+MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
+                 PH: MockSensor(MOCK_ESTADO_SUELO.PH),
+                 TEMPERATURA: MockSensor(MOCK_ESTADO_SUELO.temperatura),
+                 HORA: MockSensorHora(MOCK_CENTRAL_METEOROLOGICA)}
