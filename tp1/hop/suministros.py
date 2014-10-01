@@ -7,9 +7,6 @@ class Suministro:
         self.nombre = nombre
         self.medida_minima = medida_minima
 
-    def __hash__(self):
-        return hash(self.nombre)
-
 
 class Actuador(metaclass=ABCMeta):
     def __init__(self, nombre, suministro):

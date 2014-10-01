@@ -5,7 +5,6 @@ LLUVIA = Medida(100.0, PORCIENTO)     # qué porcentaje de humedad se considera 
 SOL    = Medida(100.0, LUMENS)        # qué cantidad de luz se considera sol
 MEDICIONES = HUMEDAD, PH, TEMPERATURA, HORA = range(4)
 
-
 class InterfazSensor(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self):
