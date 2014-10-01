@@ -58,7 +58,7 @@ class PlanDeSuministros:
         return self.medida_por_actuador[actuador]
 
 
-class BuilderSupervisores:
+class Coordinador:
     def __init__(self, plan_maestro, plan_de_suministros, sensores, actuadores, responsables):
         self.plan_maestro = plan_maestro
         self.sensores = sensores
@@ -118,4 +118,4 @@ lista_plan_suministros = [[ACTUADORES[AGREGAR_FERTILIZANTE]] if i % 2 == 0 else 
 medidas_plan_suministros = {ACTUADORES[AGREGAR_FERTILIZANTE]: Medida(50.0, CM3), ACTUADORES[AGREGAR_ANTIBIOTICOS]: Medida(50.0, CM3)}
 MOCK_PLAN_SUMINISTROS = PlanDeSuministros(lista_plan_suministros, medidas_plan_suministros)
 MOCK_RESPONSABLES = [MOCK_RESPONSABLE_USUARIO, MOCK_RESPONSABLE_CENTRAL_METEOROLOGICA]
-MOCK_BUILDER = BuilderSupervisores(MOCK_PLAN_MAESTRO, MOCK_PLAN_SUMINISTROS, MOCK_SENSORES, ACTUADORES, MOCK_RESPONSABLES)
+MOCK_COORDINADOR = Coordinador(MOCK_PLAN_MAESTRO, MOCK_PLAN_SUMINISTROS, MOCK_SENSORES, ACTUADORES, MOCK_RESPONSABLES)
