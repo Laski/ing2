@@ -48,6 +48,29 @@ El timer es un objeto observable y los supervisores implementan la interfaz de o
 
 Esta solución nos permite variar la cantidad de supervisores en caso de que se aumenten los sensores que se utilizan.
 
+\subsection{Plan Maestro y Plan de Suministro}
+En una primer etapa, el Plan de Suministro y el Plan Maestro tenían más responsabilidades que simplemente conocer cual es el estado ideal de la planta y que acciones se deben realizar. Esta idea terminaba generando dos objetos que centralizaban la lógica de resolución del problema y, claramente, tenían varios ejes de cambio.
+
+Luego de confrontar con esta propuesta, ambos objetos pasaron a un plano más secundario a la hora de pensar la resolución del problema de sensar y decidir actuar (que ya vimos antes como terminamos resolviéndolo). Su responsabilidad ahora está dada por brindar los datos necesarios para crear los supervisores.
+
+\textbf{ACA ALGÚN DIAGRAMA}
+
+\subsection{Coordinador}
+Los parámetros utilizados para decidir si una medición provoca o no una alerta van a variar según la etapa en la que se encuentre el cultivo. Esto provocará que los supervisores que se encargan de tomar esas decisiones tengan que cambiar su funcionamiento. Sin embargo, el resto de los objetos no deben verse afectados en absoluto.
+
+Por esta razón, decidimos agregar al diseño un coordinador, encargado de mantener la información necesaria para modificar los supervisores que se encuentran operando. 
+
+Este coordinador mantiene la información del Plan Maestro y los distintos Planes de Suministro por etapa, así como los actuadores y acciones disponibles.
+
+\textbf{ACA ALGÚN DIAGRAMA}
+
+\subsection{Estados y Mediciones}
+Tanto para el estado del suelo como el estado meteorológico, contamos con sus objetos correspondientes que tienen la información humedad, ph y temperatura (en el caso del suelo), y humedad, temperatura y luz (en el otro caso).
+
+Para ambos estados, las mediciones están representadas por el objeto \textit{Medida} que  tiene una cantidad y una unidad de medida.
+
+\textbf{ACA ALGÚN DIAGRAMA}
+
 
 
 \subsection{Situación: nueva medición de humedad}
