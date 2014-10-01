@@ -1,6 +1,8 @@
 from responsables import ResponsableUsuario, ResponsableCentralMeteorologica
-from suministros import ACTUADORES, REGAR, AUMENTAR_LUZ, DISMINUIR_LUZ, AGREGAR_FERTILIZANTE, AGREGAR_ANTIBIOTICOS
-from estados import ETAPAS
+from suministros import SUMINISTROS, ACTUADORES, AGREGAR_FERTILIZANTE
+from sensores import MOCK_SENSORES
+from estados import ETAPAS, MOCK_ESTADO_SUELO
+
 
 class PlanMaestro:
     def __init__(self, estados_deseados):
@@ -14,10 +16,10 @@ class PlanMaestro:
     def humedad_deseada(self, etapa):
         return self.estado_deseado(etapa).humedad
 
-    def ph_aceptado(self, etapa):
+    def ph_deseado(self, etapa):
         return self.estado_deseado(etapa).ph
 
-    def temperatura_aceptada(self, etapa):
+    def temperatura_deseada(self, etapa):
         return self.estado_deseado(etapa).temperatura
 
 
@@ -28,13 +30,45 @@ class PlanDeSuministros:
         self.actuadores_por_hora = actuadores_por_hora
 
 
-class BuilderSupervisores:
-    def __init__(self, plan_maestro, plan_de_suministros):
-        self.plan_maestro = plan_maestro
-        self.plan_de_suministros = plan_de_suministros
-        self.cambio_la_etapa(ETAPAS[0])
-        self.sensores =
-        self.supervisores = []
+class Observable(metaclass=ABCMeta):
+    def __init__(self):
+        self.observers = []
 
-    def cambio_la_etapa(self, etapa):
+    def subscribir(self, observer):
+        self.observers.append(observer)
+
+    def desubscribir(self, observer):
+        self.observers.remove(observer)
+
+    def notificar(self):
+        for observer in self.observers:
+            observer.notificar()
+
+
+class Reloj(Observable):
+    def tick(self):         # abstraccion del reloj real, cada vez que cambie va a ser una hora nueva
+        self.notificar()
+
+
+class BuilderSupervisores:
+    def __init__(self, plan_maestro, plan_de_suministros, sensores, actuadores):
+        self.plan_maestro = plan_maestro
+        self.sensores = sensores
+        self.actuadores = actuadores
+        self.suministradores = {}
+        for suministro in SUMINISTROS:
+            self.suministradores[suministro] = Suministrador()
+        self.supervisores = []
+        self.cambio_la_etapa(ETAPAS[0], plan_de_suministros)
+
+    def cambio_la_etapa(self, etapa, plan_de_suministros):
+        self.supervisores.clear()   # borro los supervisores anteriores
+        # hay que mantener los estados
         estado_deseado = self.plan_maestro.estado_deseado(etapa)
+        for actuador in self.actuadores:
+            self.suministradores =
+
+
+MOCK_PLAN_MAESTRO = PlanMaestro({etapa: MOCK_ESTADO_SUELO for etapa in ETAPAS})     # el estado deseado es el mismo para cualquier etapa
+MOCK_PLAN_SUMINISTROS = [[AGREGAR_FERTILIZANTE] for i in range(24)]                 # se agrega fertilizante todas las horas
+MOCK_BUILDER = BuilderSupervisores(MOCK_PLAN_MAESTRO, MOCK_PLAN_SUMINISTROS, MOCK_SENSORES, ACTUADORES)
