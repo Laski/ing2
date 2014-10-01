@@ -1,9 +1,15 @@
-\section{Proyecto}
+\section{Introducción}
+
+En este trabajo se presenta el desarrollo de un proyecto para una \textit{Huerta Orgánica de Precisión} (HOP) el cual incluyó una planificación utilizando metodologías ágiles ($Scrum$), un diseño orientado a objetos y una primera implementación en \verb|Python|. El objetivo del presente informe es detallar la experiencia del grupo utilizando la técnica de planificación en contraste con la puesta en práctica del desarrollo, así como también profundizar en algunas decisiones tomadas respecto del modelado y uso de ciertos patrones de diseño interesantes. Por último, se busca también documentar mínimamente la implementación y la batería de tests incluída para verificar los criterios de aceptación iniciales. 
+
+\section{Planificación}
+
+Para la planificación de este proyecto se utilizó la técnica $Scrum$ del ámbito de las metodologías ágiles. Para llevarla adelante se decidió utilizar la plataforma \textsl{RallyDev}, la cual sirvió como herramienta para cargar las \textit{User Stories} con sus respectivas tareas y criterios de aceptación, diagramar un primer \textit{Sprint} que traccionaría el desarrollo de este trabajo y llevar adelante un \textit{Burndown} de las tareas y las horas invertidas según lo planificado.\\
+\indent Si bien la ténica no exige la utilización de esta herramienta, resultó de gran utilidad para poder poner el foco en lo que había que planificar, es decir identificar roles, stories, tareas, esfuerzo, etc., y no tanto en el soporte o las formalidades de la misma, algo ventajoso tratándose de la primera experiencia con la metodología.
 
 \subsection{Product Backlog}
-\subsubsection{Roles}
 
-Durante el planificación de las $stories$ para el backlog y posterior $sprint$, definimos los siguientes roles para enfocar los distintos propósitos en la aplicación final.
+Como primera medida para la identificación de las $stories$ a desarrollar, y con la mira puesta en contextualizar el uso de la HOP, definimos los siguientes roles para la aplicación:
 
 \begin{itemize}
 \item \textbf{Botánico}: Es quien se encarga de diseñar el plan de cultivo, crecimiento y cuidado de las plantas, pudiendo realizar cambios sobre la marcha si fuera necesario.
@@ -11,15 +17,30 @@ Durante el planificación de las $stories$ para el backlog y posterior $sprint$,
 \item \textbf{Consumidor}: es el que paga la semilla, los insumos y es dueño de los cultivos. Su interés es que todo salga bien para poder hacer usufructo de los mismos, por lo tanto debe monitorear los gastos, el estado de las plantas y saber cuándo podrá cosechar.
 \end{itemize}
 
-\subsubsection{Estimación de tiempo/costo del Sprint}
+Es interesante notar que la distinción de roles no implica que, en la práctica, se trate de sujetos / usuarios distintos. Sin embargo, plantear el uso de la aplicación desde distintos puntos de vista resultó importante para poder visualizar las distintas funcionalidades que se desarrollarían, lo cual facilitó la decantación de las siguientes $user\ stories$ iniciales:
 
-El equipo de trabajo se conforma por los 4 integrantes, quienes le dedicaríamos 2 horas por día de cursada a la realización del primer tramo del proyecto. Como en el sprint serán 8 días hábiles, en total cada uno aportaría 16 horas. Estimamos que un 15\% de ese tiempo reservado se pierde fuera del propósito de desarrollo principal, lo que nos da 13,60 horas reales por cada integrante durante esta etapa. En total se trata de 54,4 horas humanas entre todo el equpo.\\
-\indent Por otro lado, las stories seleccionadas para el sprint suman 40 story points según la estimación de esfuerzo realizada. Como no contamos con un historial de otros sprints, definimos arbitrariamente que por cada story point se deberán consumir 1,2 horas de trabajo. Esto da 48 horas en total, dejando así 6,4 horas de margen en el caso de que la estimación no se cumpliera tal cual (probablemente) o hubiera que agregar otra story al sprint.
+\begin{itemize}
+\item \textbf{ACA ESTARÍA BUENO LISTAR LAS USER STORIES}
+\end{itemize}
 
+\subsection{Definición del Sprint}
 
-\subsection{Sprint Backlog}
+Luego de la identificación de un conjunto de historias lo suficientemente robusto como para cubrir las funcionalidades y escenarios planteados en el documento que dio origen a este proyecto, se procedió a la elección de algunas de ellas para conformar el primer y único $sprint$ del desarrollo. El criterio de selección se realizó según lo indica la técnica empleada, asignando medidas de relación y esfuerzo a cada historia y luego tomando las primeras de un órden de mérito realizado según la relación entre ambas métricas. Este corte sí resultó más subjetivo, basado en las restricciones temporales y en la evaluación grupal que se hizo de las funcionalidades más importantes o pedidas dentro de las del ranking.
 
-\subsection{Burndown Chart}
+\begin{itemize}
+\item \textbf{ACA ESTARÍA BUENO LISTAR LAS USER STORIES del sprint con métricas}
+\end{itemize}
+
+Inicialmente, este fue el análisis presentado para la estimación de trabajo en el sprint:\\
+
+\indent \textsl{El equipo de trabajo se conforma por los 4 integrantes, quienes le dedicaríamos 2 horas por día de cursada a la realización del primer tramo del proyecto. Como en el sprint serán 8 días hábiles, en total cada uno aportaría 16 horas. Estimamos que un 15\% de ese tiempo reservado se pierde fuera del propósito de desarrollo principal, lo que nos da 13,60 horas reales por cada integrante durante esta etapa. En total se trata de 54,4 horas humanas entre todo el equpo.}\\
+\indent \textsl{Por otro lado, las stories seleccionadas para el sprint suman 40 story points según la estimación de esfuerzo realizada. Como no contamos con un historial de otros sprints, definimos arbitrariamente que por cada story point se deberán consumir 1,2 horas de trabajo. Esto da 48 horas en total, dejando así 6,4 horas de margen en el caso de que la estimación no se cumpliera tal cual (probablemente) o hubiera que agregar otra story al sprint.}\\
+
+\indent Vale aclarar que los 8 días hábiles pensados inicialmente no se concibieron de corrido, sino distribuidos a lo largo del tiempo asignado previo a la entrega final. De todas maneras se tuvieron que contemplar algunos días de fin de semana para utilizar algunas de las horas dejadas como margen para compensar algunos retrasos.
+
+\subsection{Ejecución del Sprint}
+
+\textbf{ACA HABLAR DE LA PLANIFICACIÓN VS. REALIDAD, CAMBIOS SOBRE LA MARCHA, BURNDOWN CHART, ETC}.
 
 \subsection{Sprint Review}
 Habiendo cumplido el primer sprint finalizamos una primer versión del producto andando. 
