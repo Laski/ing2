@@ -1,4 +1,4 @@
-UNIDADES = MILILITROS, LUMENS, PH, GRADOS, PORCIENTO = range(3)
+UNIDADES = MILILITROS, LUMENS, CM3, PH, GRADOS, PORCIENTO = range(6)
 
 
 class Medida:
@@ -61,9 +61,9 @@ for (numero, nombre) in datos_etapas:
 
 
 class EstadoSuelo:
-    def __init__(self, humedad, PH, temperatura):
+    def __init__(self, humedad, ph, temperatura):
         self.humedad = humedad
-        self.PH = PH
+        self.ph = ph
         self.temperatura = temperatura
 
 
@@ -74,6 +74,6 @@ class EstadoMeteorologico:
         self.luz = luz
 
 
-MOCK_ESTADO_SUELO = EstadoSuelo(humedad=Medida(50.0, PORCIENTO), PH=Medida(7.0, PH), temperatura=Medida(20.0, GRADOS))
+MOCK_ESTADO_SUELO = EstadoSuelo(humedad=Medida(50.0, PORCIENTO), ph=Medida(7.0, PH), temperatura=Medida(20.0, GRADOS))
 MOCK_ESTADO_METEOROLOGICO = EstadoMeteorologico(temperatura=Medida(20.0, GRADOS), humedad=Medida(50.0, PORCIENTO),
                                                 luz=Medida(100.0, LUMENS))

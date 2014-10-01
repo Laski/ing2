@@ -1,15 +1,21 @@
 from abc import ABCMeta, abstractmethod
+from estados import Medida, MILILITROS, LUMENS, CM3
 
 
-SUMINISTROS = AGUA, LUZ, FERTILIZANTE, ANTIBIOTICOS = range(4)
-SUMINISTROS_TEXTO = "Agua", "Luz", "Fertilizante", "Antibióticos"
-ACCIONES = REGAR, AUMENTAR_LUZ, DISMINUIR_LUZ, AGREGAR_FERTILIZANTE, AGREGAR_ANTIBIOTICOS = range(5)
-ACCIONES_TEXTO = "Regar", "Aumentar luz", "Disminuir luz", "Agregar fertilizante", "Agregar antibióticos"
+class Suministro:
+    def __init__(self, nombre, medida_minima):
+        self.nombre = nombre
+        self.medida_minima = medida_minima
 
 
 class Actuador(metaclass=ABCMeta):
-    def __init__(self, accion):
-        self.nombre = ACCIONES_TEXTO[accion]
+    def __init__(self, nombre, suministro):
+        self.nombre = nombre
+        self.suministro = suministro
+
+    @property
+    def medida_minima(self):
+        return self.suministro.medida_minima
 
     @abstractmethod
     def ejecutar(self, medida):
@@ -21,6 +27,14 @@ class MockActuador(Actuador):
         pass
 
 
+AGUA = Suministro("Agua", Medida(5, MILILITROS))
+LUZ = Suministro("Luz", Medida(5, LUMENS))
+FERTILIZANTE = Suministro("Fertilizante", Medida(5, CM3))
+ANTIBIOTICOS = Suministro("Antibióticos", Medida(5, CM3))
+SUMINISTROS = AGUA, LUZ, FERTILIZANTE, ANTIBIOTICOS
+
+ACCIONES = REGAR, AUMENTAR_LUZ, DISMINUIR_LUZ, AGREGAR_FERTILIZANTE, AGREGAR_ANTIBIOTICOS = range(5)
+ACCIONES_TEXTO = "Regar", "Aumentar luz", "Disminuir luz", "Agregar fertilizante", "Agregar antibióticos"
 ACTUADORES = {}
 for accion in ACCIONES:
-    ACTUADORES[accion] = MockActuador(accion)
+    ACTUADORES[accion] = MockActuador(ACCIONES_TEXTO[accion], )

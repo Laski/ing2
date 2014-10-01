@@ -2,21 +2,6 @@ from abc import ABCMeta, abstractmethod
 from responsables import SI, NO, TIMEOUT
 
 
-class Observable(metaclass=ABCMeta):
-    def __init__(self):
-        self.observers = []
-
-    def subscribir(self, observer):
-        self.observers.append(observer)
-
-    def desubscribir(self, observer):
-        self.observers.remove(observer)
-
-    def notificar(self):
-        for observer in self.observers:
-            observer.notificar()
-
-
 class Supervisor(metaclass=ABCMeta):  # ex-filtro
     def __init__(self, sensor, suministrador_exceso, suministrador_defecto, observable):
         self.sensor = sensor
