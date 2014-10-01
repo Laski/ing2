@@ -1,58 +1,17 @@
 from abc import ABCMeta, abstractmethod
+from datetime import time
+from estados import Medida, MOCK_ESTADO_SUELO, MOCK_ESTADO_METEOROLOGICO, PORCIENTO, LUMENS
 
-from estados import EstadoSuelo, EstadoMeteorologico
+LLUVIA = Medida(100.0, PORCIENTO)     # qué porcentaje de humedad se considera lluvia
+SOL    = Medida(100.0, LUMENS)        # qué cantidad de luz se considera sol
+MEDICIONES_SUELO = HUMEDAD, PH, TEMPERATURA = range(3)
 
-UNIDADES = MILILITROS, LUMENS, PH = range(3)
-
-
-class Medida:
-    def __init__(self, cantidad, unidad):
-        self._cantidad = cantidad
-        self._unidad = unidad
-
-    @property
-    def cantidad(self):
-        return self._cantidad
-
-    @property
-    def unidad(self):
-        return self._unidad
-
-    # para que sean comparables:
-    def __lt__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad < other.cantidad
-
-    def __le__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad <= other.cantidad
-
-    def __eq__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad == other.cantidad
-
-    def __ge__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad >= other.cantidad
-
-    def __gt__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad > other.cantidad
-
-    def __ne__(self, other):
-        self.verificar_unidad(other)
-        return self.cantidad != other.cantidad
-
-    def verificar_unidad(self, other):
-        if self.unidad != other.unidad:
-            raise TypeError("Intentando comparar medidas de unidades distintas")
-
-
-class InterfazSensor:
-
+class InterfazSensor(metaclass=ABCMeta):
+    @abstractmethod
     def __init__(self):
         pass
 
+    @abstractmethod
     def medir(self):
         # devuelve una Medida
         pass
@@ -77,34 +36,41 @@ class InterfazCentralMeteorologica(metaclass=ABCMeta):
     def hora_oficial(self):
         pass
 
+    def va_a_llover(self):
+        return LLUVIA in [estado.humedad for estado in self.estimacion_estados_futuros()]
 
-class MockSensorSuelo:
-    def __init__(self, humedad_percibida, PH_percibido, temperatura_percibida):
-        self._estado = EstadoSuelo(humedad_percibida, PH_percibido, temperatura_percibida)
-
-    @property
-    def estado(self):
-        return self._estado
+    def va_a_salir_el_sol(self):
+        return SOL in [estado.luz for estado in self.estimacion_estados_futuros()]
 
 
-class MockCentralMeteorologica:
-    def __init__(self, temperatura_percibida, humedad_percibida, luz_percibida, hora_oficial,
-                 estimaciones_temperatura, estimaciones_humedad, estimaciones_luz):
-        self._estado = EstadoMeteorologico(temperatura_percibida, humedad_percibida, luz_percibida)
-        self._estimaciones = [EstadoMeteorologico(estimaciones_temperatura[i],
-                                                 estimaciones_humedad[i],
-                                                 estimaciones_luz[i])
-                             for i in range(len(estimaciones_temperatura))]
+class MockSensor(InterfazSensor):
+    def __init__(self, medida):
+        super().__init__(self)
+        self.medida = medida
+
+    def medir(self):
+        return self.medida
+
+
+class MockCentralMeteorologica(InterfazCentralMeteorologica):
+    def __init__(self, estado_percibido, hora_oficial, estimaciones):
+        super().__init__(self)
+        self._estado = estado_percibido
+        self._estimaciones = estimaciones
         self._hora_oficial = hora_oficial
 
-    @property
     def estado_actual(self):
         return self._estado
 
-    @property
     def estimacion_estados_futuros(self):
         return self._estimaciones
 
-    @property
     def hora_oficial(self):
         return self._hora_oficial
+
+
+MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
+                 PH: MockSensor(MOCK_ESTADO_SUELO.PH),
+                 TEMPERATURA: MockSensor(MOCK_ESTADO_SUELO.temperatura)}
+
+MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, time(12, 0, 0))
