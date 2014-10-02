@@ -72,10 +72,11 @@ class MockCentralMeteorologica(InterfazCentralMeteorologica):
         return self._estimaciones
 
     def hora_oficial(self):
+        self._hora_oficial = self._hora_oficial + 1
         return self._hora_oficial
 
 
-MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12, {})    # son las doce. siempre.
+MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 0, {})
 
 MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
                  PH: MockSensor(MOCK_ESTADO_SUELO.ph),
