@@ -20,16 +20,88 @@ Como primera medida para la identificación de las $stories$ a desarrollar, y co
 Es interesante notar que la distinción de roles no implica que, en la práctica, se trate de sujetos / usuarios distintos. Sin embargo, plantear el uso de la aplicación desde distintos puntos de vista resultó importante para poder visualizar las distintas funcionalidades que se desarrollarían, lo cual facilitó la decantación de las siguientes $user\ stories$ iniciales:
 
 \begin{itemize}
-\item \textbf{ACA ESTARÍA BUENO LISTAR LAS USER STORIES}
+\item Como Jardinero quiero ordenar a los actuadores que suministren insumos a la planta
+\item Como Jardinero quiero visualizar el estado de los sensores
+\item Como Jardinero quiero visualizar el plan de suministro de las siguientes 24hrs
+\item Como Jardinero quiero visualizar el estado de la central meteorológica	
+\item Como Botánico quiero modificar el programa de suministros 
+\item Como Botánico quiero visualizar el estado de fenología	
+\item Como Consumidor quiero visualizar el plan maestro	
+\item Como Jardinero quiero ingresar estados de fenología	
+\item Como Botánico quiero declarar un plan maestro de cultivo
+\item Como Botánico quiero programar suministros de insumos
 \end{itemize}
 
 \subsection{Definición del Sprint}
 
 Luego de la identificación de un conjunto de historias lo suficientemente robusto como para cubrir las funcionalidades y escenarios planteados en el documento que dio origen a este proyecto, se procedió a la elección de algunas de ellas para conformar el primer y único $sprint$ del desarrollo. El criterio de selección se realizó según lo indica la técnica empleada, asignando medidas de relación y esfuerzo a cada historia y luego tomando las primeras de un órden de mérito realizado según la relación entre ambas métricas. Este corte sí resultó más subjetivo, basado en las restricciones temporales y en la evaluación grupal que se hizo de las funcionalidades más importantes o pedidas dentro de las del ranking.
 
-\begin{itemize}
-\item \textbf{ACA ESTARÍA BUENO LISTAR LAS USER STORIES del sprint con métricas}
-\end{itemize}
+\begin{center}
+    \begin{tabular}{ | c | p{5cm} | l | l |}
+    \hline
+    ID & Item & Business Value & Story Points \\ \hline
+1 & Como Jardinero quiero ordenar a los actuadores que suministren insumos a la planta	& 7	& 1	\\ \hline
+2 & Como Jardinero quiero visualizar el estado de los sensores	& 7 &	3 \\ \hline
+3 & Como Jardinero quiero visualizar el plan de suministro de las siguientes 24hrs	& 7	& 3 \\ \hline
+4 & Como Jardinero quiero visualizar el estado de la central meteorológica	& 6	& 3 \\ \hline
+5 & Como Botánico quiero modificar el programa de suministros &	5	& 3 \\ \hline
+6 & Como Botánico quiero visualizar el estado de fenología	& 4	& 3 \\ \hline
+7 & Como Consumidor quiero visualizar el plan maestro	& 4	& 3 \\ \hline
+8 & Como Jardinero quiero ingresar estados de fenología	& 6	& 5 \\ \hline
+9 & Como Botánico quiero declarar un plan maestro de cultivo	& 7	& 8 \\ \hline
+10 & Como Botánico quiero programar suministros de insumos	& 7	& 8 \\ \hline
+    \end{tabular}
+\end{center}
+
+\subsection{Definición de Tareas}
+
+
+\begin{description}
+  \item[US79 Como Botánico quiero programar suministros de insumos] \hfill \\
+  TA108	Desarrollo para ingreso de la programacion de suministro. horas estimadas $1$ \\
+  TA109	Diseño Modulo que ejecuta suministros programados. horas estimadas $3$ \\
+  TA208	Unit tests. horas estimadas $2$ \\
+  TA209	Preparación Demo para la entrega. horas estimadas $2.5$
+  \item[US75 Como Jardinero quiero visualizar el estado de los sensores] \hfill \\
+	TA104	Desarrollo del diseño de los sensores. horas estimadas $1$ \\
+	TA105	Implementación/Integración de la API con sensores (drivers, bibliotecas). horas estimadas $1$ \\
+	TA106	Diseño del Modelo para almacenar y representar datos de los sensores (por ejemplo tempratura, humedad, etc). horas estimadas $1.5$ \\
+	TA203	Unit tests. horas estimadas $1$ \\ 
+  \item[US84 Como Botánico quiero declarar un plan maestro de cultivo] \hfill \\
+  TA110	Diseño que soporte cambios en el plan maestro. horas estimadas $4$
+  TA111	Permitir programación de estados de fenología y valores de indicadores esperados. horas estimadas $1$ \\
+  TA128	Permitir programación de suministro de insumos. horas estimadas $2.5$ \\
+  TA202	unit tests segun criterios de aceptación. horas estimadas $2$ \\
+  TA205	Desarrollo de la implementación. horas estimadas $2$ \\
+  \item[US78 Como Jardinero quiero visualizar el estado de la central meteorológica] \hfill \\
+  TA112	Desarrollo del diseño de la central. horas estimadas $1$
+  TA113	Implementación del modulo que se comunique con la API de la central meteorológica. horas estimadas $3.5$
+  TA191	Modelo para la central. horas estimadas $1$
+    \item[US90	Como Jardinero quiero ordenar a los actuadores que suministren insumos a la planta] \hfill \\\
+    TA117	Modelo para la Integración entre API y actuadores (driver, biblioteca). horas estimadas $1$ \\
+    TA125	Desarrollo del diseño que permita enviar mensajes a los actuadores. horas estimadas $1$ \\
+    TA206	Implementación de la integracion. horas estimadas $2$ \\
+  
+    \item[US85 Como Botánico quiero visualizar el estadio de fenología] \hfill \\
+    TA107	Desarrollo/Diseño para ver el estado de fenologia. horas estimadas $2$
+    \item[US91	Como Jardinero quiero visualizar el plan de suministro de las siguientes 24hrs] \hfill \\
+    	TA116	Funcionalidad para extraer del plan maestro datos de suministro de un próximo periodo. horas estimadas $3$
+    
+    \item[US87	Como Consumidor quiero visualizar el plan maestro] \hfill \\
+    TA124	Desarrollo del modelo del plan maestro. horas estimadas $1.5$ \\
+    TA190	Diseño/Modelo para el plan maestro. horas estimadas $1.5$ \\
+    
+        \item[US82	Como Jardinero quiero ingresar estados de fenología] \hfill \\
+        TA126	Funcionalidad para definición de estados de fenología. horas estimadas $2$
+        TA127	Permitir editar plan maestro para agregar estados de fenología definidos en la aplicación. horas estimadas $2$ \\
+        TA207	Unit tests. horas estimadas $1$
+        
+         \item[US92	Como Botánico quiero modificar el programa de suministros] \hfill \\
+         TA115	Desarrollo para soportar modificacion del programa. horas estimadas $2$
+         
+        
+
+\end{description}
 
 Inicialmente, este fue el análisis presentado para la estimación de trabajo en el sprint:\\
 
@@ -40,10 +112,31 @@ Inicialmente, este fue el análisis presentado para la estimación de trabajo en
 
 \subsection{Ejecución del Sprint}
 
-\textbf{ACA HABLAR DE LA PLANIFICACIÓN VS. REALIDAD, CAMBIOS SOBRE LA MARCHA, BURNDOWN CHART, ETC}.
+A continuación mostraremos una burndown chart y un cumulative flow que muestran el desempeno del equipo a lo largo del primer sprint.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/burn_down.png}
+  \caption{Burndown Chart}
+  \label{fig:burn_down_chart}
+\end{figure} 
 
 A lo largo del desarrollo del sistema, el proyecto sufrió varios cambios. El principal eje de cambio fue el diseño general del sistema, esto se debió a la necedad de realizar un primer acercamiento grupal al dominio general del problema para poder entender de manera más detallada, el comportamiento y la funcionalidad del sistema que queríamos desarrollar. Esto generó algunos retrasos en el sprint que pudimos solucionar encontrando finalmente un diseño que nos resultó convincente. \\
-\indent En cuanto a la próxima iteración del sprint, vemos necesario avanzar en
+En la segunda parte del sprint nos dedicamos al desarrollo de este diseño, por este motivo el grupo no alcanzo el rendimiento óptimo.
+
+En el siguiente gráfico mostramos como fue la actividad del grupo a lo largo de la segunda parte del sprint.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/cumulative_flow.png}
+  \caption{Burndown Chart}
+  \label{fig:cumulative_flow}
+\end{figure} 
+
+
+
+
+
 
 \subsection{Sprint Review}
 Habiendo cumplido el primer sprint finalizamos una primer versión del producto andando. 
