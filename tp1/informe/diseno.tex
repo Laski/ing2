@@ -46,53 +46,57 @@ Otra característica interesante incorporada al modelo a raíz de la necesidad d
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\textwidth]{./imagenes/clases.jpg}
+  \includegraphics[width=0.6\textwidth]{./imagenes/clases.jpg}
   \caption{Diagrama de Clases en relación a Responsable}
   \label{fig:clases_resp}
 \end{figure}
 
 \subsection{Observables}
 
-Una vez que concluimos en utilizar ese diseño para los sensores y actuadores del sistema, nos encontramos con la dificultad de pensar quien tomará el rol de avisar a los distintos supervisores que es momento de supervisar. La solución apareció bastante rápido y se trata de un timer y un observer pattern.
+Un factor fundamental de este modelo es el paso del tiempo, el cual está intimamente ligado al monitoreo de la HOP y la ejecución de suministros programados. Una vez que concluimos en utilizar el diseño mostrado más arriba nos encontramos con la dificultad de determinar quién tomaría el rol de avisar a los distintos supervisores que debían supervisar. La solución se formuló utilizando el patrón $observer$. Si bien al día de la fecha el tiempo está simulado mediante el llamado manual a una función, sí existe una abstracción que es la que posee este método y que es \textsl{Reloj} que hereda de la clase abstracta Observable. El patrón utilizado aquí permite que distintos objetos se suscriban a una instancia de la clase y que luego, en el caso de \textsl{Reloj} mediante el método $tick$, sean notificados. Cada observado debe implementar este método ($notificar$), y el uso que se le dio en este modelo es que los supervisores, al momento de su creación, se suscribieran a una instancia de Reloj; luego con cada $tick$ son notificados y es su implementación de este método la que accióna el pedido de medición al sensor y demás, como se explicó antes. 
 
-El timer es un objeto observable y los supervisores implementan la interfaz de observadores. De esta forma, los distintos supervisores se registran con el timer y este les avisa cada cierta cantidad de tiempo que es momento de supervisar.
-
-Esta solución nos permite variar la cantidad de supervisores en caso de que se aumenten los sensores que se utilizan.
-
-\textbf{ACA ALGÚN DIAGRAMA}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./imagenes/clases3.jpg}
+  \caption{Diagrama de Clases con patrón observer}
+  \label{fig:clases_obs}
+\end{figure}
 
 \subsection{Coordinador}
-Los parámetros utilizados para decidir si una medición provoca o no una alerta van a variar según la etapa en la que se encuentre el cultivo. Esto provocará que los supervisores que se encargan de tomar esas decisiones tengan que cambiar su funcionamiento. Sin embargo, el resto de los objetos no deben verse afectados en absoluto.
+Los parámetros utilizados para decidir si una medición provoca o no una alerta van a variar según la etapa en la que se encuentre el cultivo. Esto provocará que los supervisores que se encargan de tomar esas decisiones tengan que cambiar su funcionamiento. Sin embargo, el resto de los objetos no deben verse afectados en absoluto. Por esta razón, decidimos agregar al diseño un coordinador, encargado de mantener la información necesaria para modificar los supervisores que se encuentran operando. Este coordinador mantiene la información del Plan Maestro y los distintos Planes de Suministro por etapa, así como los actuadores y acciones disponibles, de manera tal de poder combinarlas correctamente cada vez que cambie la etapa fenológica.
 
-Por esta razón, decidimos agregar al diseño un coordinador, encargado de mantener la información necesaria para modificar los supervisores que se encuentran operando. 
+\clearpage 
 
-Este coordinador mantiene la información del Plan Maestro y los distintos Planes de Suministro por etapa, así como los actuadores y acciones disponibles.
+\subsection{Situaciones Ejemplo}
 
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=1\textwidth]{./imagenes/objetosCoordinador.jpg}
-  \caption{Diagrama de colaboración}
-  \label{fig:sec_sum1}
-\end{figure}
-
-
-\subsection{Situación: nueva medición de humedad}
-Vamos a tomar un caso para ejemplificar el comportamiento del sistema al recibir una nueva medición y su consecuente resolución.
+A continuación se exhiben un diagrama de objetos y  algunos diagramas de secuencia que muestran distintas situaciones de monitoreo y regulación por parte de la HOP, incluida la cadena de responsabilidades y la interacción con el reloj. El uso de estos ejemplos tiene relevancia ya que exhibe, a nuestro criterio, una conjunción de los aspectos de diseño más interesantes. 
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{./imagenes/secuencia_suministro1.png}
-  \caption{Diagrama de secuencia suministro}
+  \includegraphics[width=0.6\textwidth]{./imagenes/objetosCoordinador.jpg}
+  \caption{Diagrama de colaboración de objetos}
   \label{fig:sec_sum1}
 \end{figure}
 
-A medida que transcurre el tiempo, el temporizador envía el mensaje de actualización a los distintos supervisores. 
-Los supervisores a su vez, se encargan de revisar el estado de los distintos sensores para decidir si alertar o no en caso de un estado no deseado.
-En este caso, espera la respuesta de la interfaz de humedad. Como vimos antes, las interfaces de sensores cumplen el rol de responder los mensajes de pedido de actualización de estado. 
-El supervisor se encarga de reconocer en los datos situaciones que deben alertarse. Es así el caso del ejemplo, donde luego de recibir la actualización alerta al suministrador correspondiente.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/secuencia_suministro1.jpg}
+  \caption{Diagrama de secuencia de regulación realizada}
+  \label{fig:sec_sum1}
+\end{figure}
 
-El suministrador, previo a ejecutar la acción para suplir la alerta, colabora con la interfaz de usuario para permitir la cancelación de la acción. En caso de no haber respuesta (timeout) consulta a un responsable secundario (en este caso, el coordinador meteorológico) que nuevamente tiene la posibilidad de cancelar la acción.
+\clearpage
 
-Si algún responsable responde al mensaje, (es decir, no hay timeout) el suministrador actúa según la respuesta. En caso de recibir timeout de todos los responsables, decide efectuar la acción.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./imagenes/secuencia_suministro2.jpg}
+  \caption{Diagrama de secuencia de regulación abortada}
+  \label{fig:sec_sum1}
+\end{figure}
 
-La acción la realiza finalmente, el actuador correspondiente.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./imagenes/secuencia_suministro3.jpg}
+  \caption{Diagrama de secuencia de suministro programado}
+  \label{fig:sec_sum1}
+\end{figure}
