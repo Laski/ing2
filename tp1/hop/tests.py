@@ -2,10 +2,11 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from estados import Medida
-from sensores import MOCK_SENSORES, PH
-from builder import Reloj
+from estados import Medida, GRADOS, PORCIENTO
+from sensores import MOCK_SENSORES, PH, TEMPERATURA, HUMEDAD
+from builder import Reloj, MOCK_COORDINADOR
 from supervisores import SupervisorMinMax, SuministradorNulo
+from suministros import DISMINUIR_LUZ, ACTUADORES, REGAR
 
 
 #class Test(unittest.TestCase):
@@ -40,69 +41,44 @@ from supervisores import SupervisorMinMax, SuministradorNulo
         #self.assertTrue(estado.humedad == self.estado_suelo_ejemplo.humedad)
 
 
-#class TestUS79ComoBotanicoQuieroProgramarSuministrosDeInsumos(unittest.TestCase):
+class TestUS79ComoBotanicoQuieroProgramarSuministrosDeInsumos(unittest.TestCase):
 
-    #def setUp(self):
-        #self.humedad = SensorSuelo()
-        #self.luz = SensorLuz()
-        #self.gotero = ActuadorGotero()
-        #self.lampara = ActuadorLampara()
-        #self.reloj = Timer()
-        #estados_deseados = {
-            #'germinacion': {},
-        #}
-        #self.una_centra = CentralMetereologica(estados_deseados=estados_deseados)
+    def setUp(self):
+        self.actuador_lampara = ACTUADORES[DISMINUIR_LUZ]
+        self.actuador_regar = ACTUADORES[REGAR]
+        self.coordinador = MOCK_COORDINADOR
+        self.sensor_temp = MOCK_SENSORES[TEMPERATURA]
+        self.sensor_humedad = MOCK_SENSORES[HUMEDAD]
+        self.reloj = self.coordinador.reloj
 
-        #self.hop = BuilderGerminacion()\
-            #.con_timer(self.reloj)\
-            #.con_plan_maestro(self.estados_deseados)\
-            #.con_supervisor_para(self.humedad)\
-            #.con_supervisor_para(self.luz)\
-            #.agregar_actuador_para(self.gotero)\
-            #.agregar_actuador_para(self.lampara)\
-            #.con_responsables([self.una_interfaz_de_usuario, self.una_central])\
-            #.crear()
+    def test_se_disminuye_la_intensidad_de_la_lampara(self):
 
-    #def test_se_disminuye_la_intensidad_de_la_lampara(self):
-        #apagar_luz = 1
+        medida_buena = Medida(21, GRADOS)
+        self.sensor_temp.medir = MagicMock(return_value=medida_buena)
 
-        #medida_buena = Medida(25, 'C')
-        #self.luz.medir = MagicMock(return_value=medida_buena)
+        self.reloj.tick()
+        self.assertFalse(self.actuador_lampara.ejecuto)
 
-        #with patch.object(self.lampara, 'ejecutar') as mock_lampara:
-            #self.reloj.tick()
+        medida_peligrosa = Medida(28, GRADOS)
+        self.sensor_temp.medir = MagicMock(return_value=medida_peligrosa)
+        self.assertFalse(self.actuador_lampara.ejecuto)
+        self.reloj.tick()
+        self.assertTrue(self.actuador_lampara.ejecuto)
 
-        #self.assertFalse(mock_lampara.ejecutar.called)
+    def test_se_suministra_agua_si_la_humedad_es_moderada_en_el_estadio_germinacion(self):
 
-        #medida_peligrosa = Medida(30, 'C')
-        #self.luz.medir = MagicMock(return_value=medida_peligrosa)
+        humedad_esperada = Medida(50, PORCIENTO)
+        self.sensor_humedad.medir = MagicMock(return_value=humedad_esperada)
 
-        #with patch.object(self.lampara, 'ejecutar') as mock_lampara:
-            #self.reloj.tick()
+        self.reloj.tick()
 
-        #mock_lampara.ejecutar.assert_called_with(apagar_luz)
+        self.assertFalse(self.actuador_regar.ejecuto)
 
-    #def test_se_suministra_agua_si_la_humedad_es_moderada_en_el_estadio_germinacion(self):
-        #suministrar_agua = 1
+        humedad_moderada = Medida(44, PORCIENTO)
+        self.sensor_humedad.medir = MagicMock(return_value=humedad_moderada)
+        self.reloj.tick()
 
-        #humedad_esperada = Medida(90, '%')
-        #self.humedad.medir = MagicMock(return_value=humedad_esperada)
-
-        #with patch.object(self.gotero, 'ejecutar') as mock_gotero:
-            #self.reloj.tick()
-
-        #self.assertFalse(mock_gotero.ejecutar.called)
-
-        #humedad_moderada = Medida(60, '%')
-        #self.humedad.medir = MogicMock(return_value=humedad_moderada)
-
-        #with pathc.object(self.gotero, 'ejecutar') as mock_gotero:
-            #self.reloj.tick()
-
-        #mock_gotero.ejecutar.assert_called_with(suministrar_agua)
-
-    #def test_se_informa_necesidad_suministros_abono(self):
-        #pass
+        self.assertTrue(self.actuador_regar.ejecuto)
 
 
 class TestUS75ComoJardineroQuieroVisualizarElEstadoDeLosSensores(unittest.TestCase):

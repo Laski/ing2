@@ -12,7 +12,7 @@ class Actuador(metaclass=ABCMeta):
     def __init__(self, nombre, suministro):
         self.nombre = nombre
         self.suministro = suministro
-        
+
     def __hash__(self):
         return hash(self.nombre)
 
@@ -26,8 +26,14 @@ class Actuador(metaclass=ABCMeta):
 
 
 class MockActuador(Actuador):
+
+    def __init__(self, nombre, suministro):
+        super().__init__(nombre, suministro)
+        self.ejecuto = False
+
     def ejecutar(self, medida):
-        pass
+        self.ejecuto = True
+        print ('El actuador {0} se ejecuto con medida {1}'.format(self.nombre, medida))
 
 
 AGUA = Suministro("Agua", Medida(5, MILILITROS))
