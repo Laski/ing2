@@ -1,5 +1,11 @@
 \section{Diseño}
-En esta sección vamos a abocarnos en la tarea de explicar el diseño que pensamos y desarrollamos para el sistema.
+
+Para el modelado de este proyecto se buscó utilizar prácticas recomendadas y algunos de los patrones vistos con el fin de obtener un modelo cerrado para la modificación pero abierto para la extensión, minimizar la repetición de código, crear buenas abstracciones y permitir variaciones de comportamiento eficientes en tiempo de ejecución. Es importante recalcar que, tal como se explicó en los comentarios de la experiencia con $Scrum$, el modelado no siempre precedió a la implementación, sino que ambos procesos se vieron intercalados y retroalimentados a medida que se avanzaban con distintas $user\ stories$ y se realizaban puestas en común entre el grupo. En esta sección presentamos la visión final del diseño con aquellas soluciones que concluímos eran las más adecuadas, aunque se incluyen comentarios respecto a qué ideas se descartaron o modificaron cuando resulte relevante el contraste.
+
+\subsection{Idea general}
+
+En esta primera etapa del desarrollo, la HOP regula los cultivos de dos maneras: mediante un monitoreo pautado por un plan maestro y por medio de suministros arbitrarios programados en un plan de suministros. Esta interacción con el mundo real está dada, en principio, por dos vías: la recepción de datos mediante sensores y la aplicación de suministros mediante actuadores. Existe una tercera vía de comunicación con el exterior, la cual importa para la toma de decisiones, e involucra envío de mensajes a terceros (se descuenta la interacción por pantalla para mostrar información general).\\
+\indent En el caso del plan maestro, éste define para una serie de estadíos fenológicos el estado de suelo deseado (humedad, temperatura, ph). El de suministros, en cambio, debe proveer la programación de insumos para una jornada, lo que incluye una lista de actuadores por cada hora del día y una medida a suministrar para cada uno. Tanto el monitoreo como el suministro arbitrario está a su vez regulado por supervisores que, según su tipo, pedirán información a sensores y en base a esto desencadenarán o no una cadena de responsabilidades hasta que se llegue a una decisión respecto de si suministrar el insumo adecuado o no.
 
 
 \subsection{Sensores, Actuadores y Responsables}
