@@ -58,9 +58,9 @@ class PlanDeSuministros:
 
     def medida_para(self, actuador):
         return self.medida_por_actuador[actuador]
-        
+
     def actuadores_programados(self):
-        return self.actuadores_por_hora.keys()
+        return self.actuadores_por_hora
 
 
 class Coordinador:
@@ -91,10 +91,11 @@ class Coordinador:
                            self.suministradores[DISMINUIR_LUZ])
 
         # ahora los suministros programados con Supervisores Hora
-        for actuador in self.plan_de_suministros.actuadores_programados():
-            self.crear_programado(self.plan_de_suministros.horas_para(actuador),
-                                  self.plan_de_suministros.medida_para(actuador),
-                                  actuador)
+        for actuadores_hora in self.plan_de_suministros.actuadores_programados():
+            for actuador in actuadores_hora:
+                self.crear_programado(self.plan_de_suministros.horas_para(actuador),
+                                      self.plan_de_suministros.medida_para(actuador),
+                                      actuador)
 
     def crear_min_max(self, medicion, deseada, suministrador_defecto, suministrador_exceso):
         min_ = Medida(deseada.cantidad * 0.9, deseada.unidad)        # con _ al final para que no tape a la funcion min()
