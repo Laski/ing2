@@ -7,52 +7,52 @@ Para el modelado de este proyecto se buscó utilizar prácticas recomendadas y a
 En esta primera etapa del desarrollo, la HOP regula los cultivos de dos maneras: mediante un monitoreo pautado por un plan maestro y por medio de suministros arbitrarios programados en un plan de suministros. Esta interacción con el mundo real está dada, en principio, por dos vías: la recepción de datos mediante sensores y la aplicación de suministros mediante actuadores. Existe una tercera vía de comunicación con el exterior, la cual importa para la toma de decisiones, e involucra envío de mensajes a terceros (se descuenta la interacción por pantalla para mostrar información general).\\
 \indent En el caso del plan maestro, éste define para una serie de estadíos fenológicos el estado de suelo deseado (humedad, temperatura, ph). El de suministros, en cambio, debe proveer la programación de insumos para una jornada, lo que incluye una lista de actuadores por cada hora del día y una medida a suministrar para cada uno. Tanto el monitoreo como el suministro arbitrario está a su vez regulado por supervisores que, según su tipo, pedirán información a sensores y en base a esto desencadenarán o no una cadena de responsabilidades hasta que se llegue a una decisión respecto de si suministrar el insumo adecuado o no.
 
-\subsection{Plan Maestro: Estados y Magnitudes}
+\subsection{Plan Maestro - Estados y Magnitudes}
 
 Antes de comenzar a hablar de las componentes más ricas del diseño es necesario detallar brevemente la parte más sencilla del mismo, que tiene que ver con la representación de parte de la información que se necesita conocer o decir sobre la realidad. Por un lado, se cuenta con la clase concreta \textsl{Medida}, que poseee como colaboradores internos una cantidad y una constante que da cuenta de la unidad correspondiente. Esto permite modelar tanto la información (medición) que se obtiene de los sensores así como también cuantificar el suministro de insumos (esto permitirá representar distintas magnitudes según se definan nuevas unidades, tanto para la incorporación de otros sensores como para el suministro de nuevos insumos). Luego, \textsl{EstadoSuelo} se compone de tres datos: medidas de temperatura, ph y humedad. Algo parecido sucede con \textsl{EstadoMeteorológico}, que a diferencia de la primera - que se utiliza para administrar el suelo en estadíos fenológicos - se utiliza para modelar el clima. Finalmente, la clase \textsl{Etapa} sólo se utiliza para encapsular nombres de estadíos fenológicos, que se definen de manera global para toda la HOP.\\
 \indent A partir de estas representaciones básicas entra en juego la clase contenedora \textsl{PlanMaestro}, que posee como variable de instancia un \textsl{Diccionario}\verb|<|\textsl{Etapa, EstadoSuelo}\verb|>| mediante el cual permite definir las etapas fenológicas a monitorear y los valores esperados del estado del suelo. Notar que este modelo permite agregar estados o modificar los existentes dinámicamente (aunque esto último tendrá un impacto como se verá luego).\\
 \indent En una los albores de la planificación y posterior modelado, el Plan Maestro tenía más responsabilidades que simplemente dictar cuál es el estado ideal de los cultivos: debía determinar también acciones a llevar adelante, información del estado, comunicación con la central meteorológica, etc. Esta idea desembocaba en un objeto que centralizaban gran parte de la lógica de resolución del problema y, claramente, tenían varios ejes de cambio y mucho acoplamiento, lo cual se fue decantando de manera natural a medida que se iteraba sobre el modelo con nuevas ideas y patrones de diseño.
 
-\subsection{Sensores, Actuadores y Responsables}
-Comenzamos con una de las partes fundamentales del sistema que es la medición de los sensores y la consecuente ejecución de un actuador. \newline
+\subsection{Plan de Suministros - Actuadores}
 
- 
-En un comienzo encaramos el diseño de esta parte del sistema pensando a los distintos sensores como observadores del Plan Maestro. Esta idea fue luego descartada por no tener ninguna razón para sacarle provecho al patrón observer y porque convertía al Plan Maestro en un objeto con demasiadas responsabilidades (conocer los sensores, sus estados, los estadíos de la planta, etc).
+En primera medida debemos hablar de la clase \textsl{Suministro}, que cuenta con un nombre y una cantidad mínima (de tipo \textsl{Medida}) y representa algún insumo a administrar por la HOP. Esto queda determinado por el nombre con que se cree el objeto de esta clase, mientras que la cantidad mínima representa la medida absoluta por defecto de ese insumo que tendrá algún impacto en el entorno (luego es utilizada como la medida a administrar en los monitoreos). Dado que éstos productos se administran a los cultivos mediante actuadores, existe también la abstracción \textsl{Actuador}, cuyas instancias conocen un nombre (que da cuenta de la acción que realiza el actuador) y el suministro que aplican.\\
+\indent En los primeros esbozos de diseño, el plan de suministros también fue concebido como una megaentidad con múltiples responsabilidades. Existía la noción sobre el monitoreo del estado del suelo, pero en ese entonces se pensaba en utilizar al plan como un ente de consulta al cual preguntarle para cierta medición de alguna magnitud y dependiendo del estado o la hora qué había que hacer. A medida que avanzó el proyecto, y que se abordaron otras historias, se fue viendo cómo esas responsabilidades recaían en otras componentes de la HOP, dejando a la clase \textsl{PlanSuministros} con la única tarea de definir la programación de insumos para un período de 24 horas. Cuenta con dos variables de instancia de tipo lista: una contiene 24 listas de actuadores, que representan aquellos programados a accionarse en cada una de las 24 horas del día; la otra, un diccionario de medidas para cada actuador único en la programación. Vale notar que aquí la idea es que se permita suministrar una cantidad arbitraria, mientras que cuando se quiere reestablecer el estado deseado en el monitoreo se utilizan medidas mínimas (ver próxima sección).
 
-A su vez, pensamos diseñar los distintos planes de suministro con un strategy pattern con la idea de que sean extensibles esos planes, pero finalmente concluímos que no era necesario.\newline
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./imagenes/clases4.jpg}
+  \caption{Diagrama de Clases en relación al Plan de Suministros}
+  \label{fig:clases4}
+\end{figure}
 
 
- 
-Otro error común que tuvimos a la hora de pensar el diseño fue el de discriminar parte del dominio de una mala manera. Por ejemplo, separando entre actuadores regulables y actuadores suministrables. Esto vino de la mano de pensar la modelización de los recursos como recursos suministrables y regulables. Esta idea también fue eliminada por generar una buena cantidad de objetos cuya esencia era la misma pero estaban separados, generando así que al momento de modificar código tengamos que reemplazarlo en varios lugares al mismo tiempo.\newline
+\subsection{Monitoreo y regulación mediante Supervisores}
 
- 
-En la figura 1 puede verse el diagrama de clases elegido luego de todas estas discusiones y reformas.
+Otra de las componentes sencillas que falta nombrar son los sensores, representados en el modelo mediante la interface \textsl{InterfazSensor} cuya única operación importante es la de medir. La idea detrás de esta concepción es que distintas claes implementen esta interfaz para distintos sensores físicos, y que con alguna lógica devuelvan un objeto de la clase \textsl{Medida}. De esta manera se pueden tener sensores de las magnitudes que interesan al modelo actual de la huerta (tempratura, humedad, ph) pero además también tiempo, lo cual como se verá adelante es sumamente poderoso para unificar el monitoreo y la administración de insumos planificada en un mismo modelo.\\
+\indent Por otro lado, se ideó la clase concreta \textsl{Suministrador}, cuyo propósito es servir como una capa más de lógica entre el actuador y su interacción con el ambiente. Los objetos de esta clase conocen un actuador, una medida arbitraria y un conjunto de responsables (Ver Cadena de Responsabilidad). Posee un único método, $alertar$, que desencadena una cadena de responsabilidades que se utiliza para consultar vinculantemente si se debe suministrar la cantidad determinada a través del actuador conocido.\\ 
+\indent El concepto que unifica gran parte de estas ideas, y que funciona como mediador entre la realidad y la lógica de la HOP, es modelado por la clase \textsl{Supervisor}. El objetivo de esta clase es que sus instancias se encarguen de monitorear algún sensor, pidiendole una medición cada cierta cantidad de tiempo (ver Observable). La lógica para analizar esa medición se encontrará en alguna de las clases que heredan de Supervisor, y deben implementar los métodos abstractos $falta$ y $sobra$. Esto permite extender el comportamiento de los supervisores, teniendo por ejemplo la clase \textsl{SupervisorMinMax} para determinar un intervalo óptimo deseado, o la clase \textsl{SupervisorHora}, que posee una colección de enteros entre los que se puede buscar si existe la medición dada. En caso de que alguno de estos métodos devuelva verdadero, el supervisor accionará el método $alertar$ de alguno de sus suministradores, de exceso según si sobra o defecto según si falta.\\
+\indent En la Figura~\ref{fig:clases_sup} puede verse el diagrama de clases que exhibe la relación entre parte de las distintas entidades involucradas en este proceso de monitoreo / regulación.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{./imagenes/clases2.jpg}
-  \caption{Diagrama de Clases}
-  \label{fig:sec_sum1}
+  \caption{Diagrama de Clases en relación al Supervisor}
+  \label{fig:clases_sup}
 \end{figure}
 
+\subsection{Cadena de responsabilidades}
 
-\newpage Vamos a profundizar en cada objeto:
+Otra característica interesante incorporada al modelo a raíz de la necesidad de interactuar con la central meteorológica fue la de cadena de responsabilidades. En esencia, lo que se trata con esto es de configurar, para cada suministrador, un conjunto de responsables que responden a la pregunta de si debe cancelar la administración de un suministro (en caso de que su supervisor lo hubiera alertado por falta o sobra). Esta lógica está incorporada en el método $alertar$, e itera sobre la colección de responsables abortando sólo si la respuesta es afirmativa para la cancelación. Esto permite que para distintos suministradores (según se utilicen para insumos de monitoreo o programados) exista una consulta vinculante al usuario, a la central meteorológica o eventualmente a otros entes terceros que puedan aportar alguna decisión. Para cada suministrador se puede ordenar la colección de distinta forma, cambiando así dinámicamente las prioridades que se asignan a cada integrante de la cadena. Como se muestra en la Figura~\ref{fig:clases_resp}, la clase \textsl{Responsable} es una interfaz cuyo método $debe_cancelar_suministro$ debe ser implementado por las clases concretas que la realicen. De esta manera, contamos por ejemplo con un \textsl{ResponsableUsuario} o \textsl{ResponsableCentralMeteorológica} que, según distintos colaboradores internos (que por lo general serán interfaces con las que hablan para indagar información según suministro) saben contribuir o dictar una decisión. 
 
-\begin{itemize}
-\item \textbf{InterfazSensor:} Este objeto tiene como colaborador interno a un sensor (de humedad, suelo, etc) y nos brinda una interfaz sencilla para comunicarnos y obtener la medición correspondiente a ese sensor.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./imagenes/clases.jpg}
+  \caption{Diagrama de Clases en relación a Responsable}
+  \label{fig:clases_resp}
+\end{figure}
 
-\item \textbf{InterfazActuador:} Al igual que para los sensores, este objeto nos brinda una interfaz sencilla para interactuar con un actuador, que es colaborador interno del objeto InterfazActuador. Ambas soluciones pueden interpretarse como un adapter pattern.
+\subsection{Observables}
 
-\item \textbf{Supervisor:} Esta es una clase de la cual heredan los distintos supervisores que vayan a usarse. Un supervisor se encarga de interpretar las mediciones y alertar en caso de que sea necesario realizar una acción. Para esto cuenta con 2 colaboradores: un suministrador por falta y un suministrador por exceso. Es el primer eslabón en la cadena de decisión.
-
-\item \textbf{Suministrador:} Es el encargado de recibir una alerta por parte del supervisor y tomar la decisión final de ejecutar o no, la acción requerida. Para esto cuenta con una colección de responsables, que son objetos capaces de responder a la consulta de si efectivizar o no la acción. Por ejemplo, un responsable es el usuario (que se le consulta a través de una interfaz), otro es el responsable de la Central Meteorológica. De esta forma, en una posible versión futura, el sistema permite la integración de nuevos módulos de consulta para automatizar las decisiones.
-
-\item \textbf{Responsable:} Como se vio recién, esta es una interfaz que la implementarán aquellos objetos que cumplan el rol de responder ante la consulta de si realizar o no una tarea. 
-\end{itemize}
-Para entender mejor el funcionamiento, más adelante se detalla un diagram de secuencia correspondiente a una nueva medición de humedad.
-
-
-\subsection{Timer}
 Una vez que concluimos en utilizar ese diseño para los sensores y actuadores del sistema, nos encontramos con la dificultad de pensar quien tomará el rol de avisar a los distintos supervisores que es momento de supervisar. La solución apareció bastante rápido y se trata de un timer y un observer pattern.
 
 El timer es un objeto observable y los supervisores implementan la interfaz de observadores. De esta forma, los distintos supervisores se registran con el timer y este les avisa cada cierta cantidad de tiempo que es momento de supervisar.
@@ -74,15 +74,6 @@ Este coordinador mantiene la información del Plan Maestro y los distintos Plane
   \caption{Diagrama de colaboración}
   \label{fig:sec_sum1}
 \end{figure}
-
-
-\subsection{Estados y Mediciones}
-Tanto para el estado del suelo como el estado meteorológico, contamos con sus objetos correspondientes que tienen la información humedad, ph y temperatura (en el caso del suelo), y humedad, temperatura y luz (en el otro caso).
-
-Para ambos estados, las mediciones están representadas por el objeto \textit{Medida} que  tiene una cantidad y una unidad de medida.
-
-\textbf{ACA ALGÚN DIAGRAMA}
-
 
 
 \subsection{Situación: nueva medición de humedad}
