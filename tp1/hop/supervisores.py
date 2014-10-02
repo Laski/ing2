@@ -74,5 +74,9 @@ class Suministrador:
 
 
 class SuministradorNulo(Suministrador):
+
+    def __init__(self):
+        pass
+
     def alerta(self):
         pass

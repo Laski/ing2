@@ -1,8 +1,10 @@
+from abc import ABCMeta
+
 from suministros import ACTUADORES, ACCIONES, REGAR, AUMENTAR_LUZ, DISMINUIR_LUZ, AGREGAR_FERTILIZANTE, AGREGAR_ANTIBIOTICOS
 from sensores import MOCK_SENSORES, HUMEDAD, TEMPERATURA, HORA
-from estados import ETAPAS, MOCK_ESTADO_SUELO, Medida
+from estados import ETAPAS, MOCK_ESTADO_SUELO, CM3, Medida
 from responsables import MOCK_RESPONSABLE_USUARIO, MOCK_RESPONSABLE_CENTRAL_METEOROLOGICA
-from supervisores import Suministrador, SupervisorMinMax, SupervisorHora
+from supervisores import Suministrador, SupervisorMinMax, SupervisorHora, SuministradorNulo
 
 
 class Observable(metaclass=ABCMeta):
@@ -53,7 +55,7 @@ class PlanDeSuministros:
 
     def horas_para(self, actuador):
         return [i for i in range(len(self.actuadores_por_hora)) if actuador in self.actuadores_por_hora[i]]
-        
+
     def medida_para(self, actuador):
         return self.medida_por_actuador[actuador]
 
@@ -86,14 +88,14 @@ class Coordinador:
                            self.suministradores[DISMINUIR_LUZ])
 
         # ahora los suministros programados con Supervisores Hora
-        for actuador in self.actuadores:
+        for actuador in self.actuadores.values():
             self.crear_programado(self.plan_de_suministros.horas_para(actuador),
                                   self.plan_de_suministros.medida_para(actuador),
                                   actuador)
 
     def crear_min_max(self, medicion, deseada, suministrador_defecto, suministrador_exceso):
-        min_ = Medida(deseada * 0.9, deseada.unidad)        # con _ al final para que no tape a la funcion min()
-        max_ = Medida(deseada * 1.1, deseada.unidad)        # idem
+        min_ = Medida(deseada.cantidad * 0.9, deseada.unidad)        # con _ al final para que no tape a la funcion min()
+        max_ = Medida(deseada.cantidad * 1.1, deseada.unidad)        # idem
         supervisor = SupervisorMinMax(sensor=self.sensores[medicion],
                                       suministrador_defecto=suministrador_defecto,
                                       suministrador_exceso=suministrador_exceso,
@@ -112,10 +114,16 @@ class Coordinador:
 
 
 # el estado deseado es el mismo para cualquier etapa
-MOCK_PLAN_MAESTRO = PlanMaestro({etapa: MOCK_ESTADO_SUELO for etapa in ETAPAS})
+MOCK_PLAN_MAESTRO = PlanMaestro({etapa: MOCK_ESTADO_SUELO for etapa in ETAPAS.values()})
 # se agrega fertilizante todas las horas pares, antibioticos las impares
 lista_plan_suministros = [[ACTUADORES[AGREGAR_FERTILIZANTE]] if i % 2 == 0 else [ACTUADORES[AGREGAR_ANTIBIOTICOS]] for i in range(24)]
-medidas_plan_suministros = {ACTUADORES[AGREGAR_FERTILIZANTE]: Medida(50.0, CM3), ACTUADORES[AGREGAR_ANTIBIOTICOS]: Medida(50.0, CM3)}
+medidas_plan_suministros = {
+    ACTUADORES[AGREGAR_FERTILIZANTE]: Medida(50.0, CM3),
+    ACTUADORES[AGREGAR_ANTIBIOTICOS]: Medida(50.0, CM3),
+    ACTUADORES[REGAR]: Medida(1, CM3),
+    ACTUADORES[AUMENTAR_LUZ]: True,
+    ACTUADORES[DISMINUIR_LUZ]: False,
+}
 MOCK_PLAN_SUMINISTROS = PlanDeSuministros(lista_plan_suministros, medidas_plan_suministros)
 MOCK_RESPONSABLES = [MOCK_RESPONSABLE_USUARIO, MOCK_RESPONSABLE_CENTRAL_METEOROLOGICA]
 MOCK_COORDINADOR = Coordinador(MOCK_PLAN_MAESTRO, MOCK_PLAN_SUMINISTROS, MOCK_SENSORES, ACTUADORES, MOCK_RESPONSABLES)

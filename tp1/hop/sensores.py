@@ -5,6 +5,7 @@ LLUVIA = Medida(100.0, PORCIENTO)     # qué porcentaje de humedad se considera 
 SOL    = Medida(100.0, LUMENS)        # qué cantidad de luz se considera sol
 MEDICIONES = HUMEDAD, PH, TEMPERATURA, HORA = range(4)
 
+
 class InterfazSensor(metaclass=ABCMeta):
     @abstractmethod
     def __init__(self):
@@ -44,7 +45,6 @@ class InterfazCentralMeteorologica(metaclass=ABCMeta):
 
 class MockSensor(InterfazSensor):
     def __init__(self, medida):
-        super().__init__(self)
         self.medida = medida
 
     def medir(self):
@@ -53,7 +53,6 @@ class MockSensor(InterfazSensor):
 
 class MockSensorHora(InterfazSensor):
     def __init__(self, central_meteorologica):
-        super().__init__(self)
         self.central_meteorologica = central_meteorologica
 
     def medir(self):
@@ -62,7 +61,6 @@ class MockSensorHora(InterfazSensor):
 
 class MockCentralMeteorologica(InterfazCentralMeteorologica):
     def __init__(self, estado_percibido, hora_oficial, estimaciones):
-        super().__init__(self)
         self._estado = estado_percibido
         self._estimaciones = estimaciones
         self._hora_oficial = hora_oficial
@@ -77,10 +75,9 @@ class MockCentralMeteorologica(InterfazCentralMeteorologica):
         return self._hora_oficial
 
 
-
-MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12)    # son las doce. siempre.
+MOCK_CENTRAL_METEOROLOGICA = MockCentralMeteorologica(MOCK_ESTADO_METEOROLOGICO, 12, {})    # son las doce. siempre.
 
 MOCK_SENSORES = {HUMEDAD: MockSensor(MOCK_ESTADO_SUELO.humedad),
-                 PH: MockSensor(MOCK_ESTADO_SUELO.PH),
+                 PH: MockSensor(MOCK_ESTADO_SUELO.ph),
                  TEMPERATURA: MockSensor(MOCK_ESTADO_SUELO.temperatura),
                  HORA: MockSensorHora(MOCK_CENTRAL_METEOROLOGICA)}
