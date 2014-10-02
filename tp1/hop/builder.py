@@ -58,6 +58,9 @@ class PlanDeSuministros:
 
     def medida_para(self, actuador):
         return self.medida_por_actuador[actuador]
+        
+    def actuadores_programados(self):
+        return self.actuadores_por_hora.keys()
 
 
 class Coordinador:
@@ -88,7 +91,7 @@ class Coordinador:
                            self.suministradores[DISMINUIR_LUZ])
 
         # ahora los suministros programados con Supervisores Hora
-        for actuador in self.actuadores.values():
+        for actuador in self.plan_de_suministros.actuadores_programados():
             self.crear_programado(self.plan_de_suministros.horas_para(actuador),
                                   self.plan_de_suministros.medida_para(actuador),
                                   actuador)
