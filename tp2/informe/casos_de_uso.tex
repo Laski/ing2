@@ -3,49 +3,100 @@
 \begin{itemize}
  \item Monitoreo
  \begin{itemize}
-    \item Recibiendo datos del \textbf{INTA}
-    \item Monitoreando estado suelos
+    \item Obteniendo datos del \textbf{INTA}
+    \begin{itemize}
+      \item Cada un cierto intervalo el sistema consulta al \textbf{INTA} para obtener nuevos datos de  la red de micro-estaciones climatol\'ogicas.
+    \end{itemize}
     \item Recibiendo images de los drones
+    \begin{itemize}
+	\item Los drones envian fotos cada cierto tiempo de las distintas areas y big cherry las recibe
+    \end{itemize}
     \item Monitoreando estado de salud plantas
+    \begin{itemize}
+	\item Se le permite al usuario ver el estado de sus plantas segun calculos del plan e im\'agenes
+    \end{itemize}
+    \item Consultando mapa de campo
+    \begin{itemize}
+	\item El usuario puede ver el mapa calculado luego de procesar las imagenes de los drones.
+    \end{itemize}
  \end{itemize}
  \item Seguimiento cultivos
  \begin{itemize}
   \item Consultando estado de cultivo
+    \begin{itemize}
+      \item Big cherry realiza calculos con toda la informaci\'on  y muestra en pantalla el estado actual del cultivo
+    \end{itemize}
   \item Iniciando seguimiento en cultivo
+  \begin{itemize}
+	\item El usuario carga el nuevo cultivo para realizar el seguimiento
+    \end{itemize}
   \end{itemize}
  \item Gesti\'on Planes
  \begin{itemize}
     \item Personalizando Plan
+    \begin{itemize}
+	\item El usuario puede usar algun plan existente y modificarlos a gusto.
+    \end{itemize}
 %     \item 
  \end{itemize}
  \item Supervisaci\'on
  \begin{itemize}
   \item Supervisando ordenes
+  \begin{itemize}
+    \item el usuario tiene una pantalla donde, por cada operaci\'on que esta por realizarse, se le permite cancelar. La opci\'on de cancelar expira con algun timeout 
+  \end{itemize}
   \item Cancelando orden futura para actuador
+  \begin{itemize}
+    \item el usuario cancela una operacion.
+  \end{itemize}
  \end{itemize} 
  \item Adminsitraci\'on General
  \begin{itemize}
     \item ABM Region 
+    \begin{itemize}
+	\item ABM de las regiones de cultivo o mejor conocidos como campos
+    \end{itemize}
     \item ABM Cultivo
+    \begin{itemize}
+	\item ABM para los cultivos que se realizaran en las distintas regiones
+    \end{itemize}
     \item ABM Actuadores
     \item ABM Drones
     \item ABM Sensores
     \item ABM Clientes
+    \begin{itemize}
+	\item Los usuarios consultores tienen acceso a este ABM para permitir manejar sus clientes.
+    \end{itemize}
  \end{itemize}
  \item Adminsitraci\'on Super Usuario
  \begin{itemize}
     \item ABM Planes
+    \begin{itemize}
+	\item
+    \end{itemize}
     \item ABM Usuario
     \item ABM Perfiles de Usuario
+    \begin{itemize}
+	\item Dado que el sistema debe soportar multiples perfiles el super usuario tiene control de estos por medio de este ABM.
+    \end{itemize}
  \end{itemize}
  
  \item Auditor\'ia
  \begin{itemize}
-    \item Revisando registro de desiciones tomadas
+    \item Revisando registro de decisiones tomadas
+    \begin{itemize}
+	\item Se permite acceder a un log donde se guardan todas las operaciones realizadas por big cherry
+    \end{itemize}
  \end{itemize}
  \item Autenticaci\'on
  \begin{itemize}
     \item Logueandose al sistema
+    \begin{itemize}
+      \item Dado que se require seguridad es necesario tener un control se autenticaci\'on. Este caso de uso representa la forma de autenticarse en big cherry
+    \end{itemize}
     \item Deslogueandose del sistema
+    \begin{itemize}
+      \item Caso para cuando el usuario o client quiere salir del sistema.
+    \end{itemize}
  \end{itemize}
 \end{itemize}
