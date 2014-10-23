@@ -1,0 +1,61 @@
+
+
+\begin{itemize}
+ \item \textbf{Descripci\'on} : Pueden surgir errores en la comunicación con los servidores del \textbf{INTA}
+ \item \textbf{Probabilidad} : Media
+ \item \textbf{Impacto} : Media
+ \item \textbf{Exposición} : Media
+ \item \textbf{Mitigación} : Detectar fallas en la comunicación para poder reportar y seguir con el normal funcionamineto
+ \item \textbf{Plan Contingencia} : Utilizar informacion de sensores e imagenes de drones para poder calcular resultados similares a los del \textbf{INTA}
+ 
+\end{itemize}
+
+\begin{itemize}
+ \item \textbf{Descripci\'on}: Problemas de conectividad en zonas alejadas
+ \item \textbf{Probabilidad}: Alta
+ \item \textbf{Impacto}: Media
+ \item \textbf{Exposición}: Media
+ \item \textbf{Mitigación} : El sistema llevaria un historial con fecha en los datos externos y detectar cuando los datos son viejos usando un reloj interno.
+ \item \textbf{Plan Contingencia} : Permitir la carga manual de datos y por medio de archivos.
+ 
+\end{itemize}
+
+\begin{itemize}
+ \item \textbf{Descripci\'on} : Cliente puede ver datos de otro client
+ \item \textbf{Probabilidad}: Baja
+ \item \textbf{Impacto} : Alto
+ \item \textbf{Exposición} : Media
+ \item \textbf{Mitigación} : Realizar test para probar casos de borde con los cuentas de clientes. Pagar a una consultora de seguridad para pruebas de seguridad
+ \item \textbf{Plan Contingencia}: Permitir el apagado rapido del sistema en caso de detecci\'on de problemas de seguridad. Guardar en logs operaciones realizadas
+ 
+\end{itemize}
+
+\begin{itemize}
+ \item \textbf{Descripci\'on} : Se utiliza mucho la red privada de drones
+ \item \textbf{Probabilidad}: Media
+ \item \textbf{Impacto}: Alto
+ \item \textbf{Exposición} : Alto
+ \item \textbf{Mitigación} : El sistema calcularia cada cierto intervalo el consumo de hect\'areas.
+ \item \textbf{Plan Contingencia} : Desactivar la red privada en caso de susperar algun limite diarios, mensual, etc. Enviar alertar al administrador del sistema
+ 
+\end{itemize}
+
+\begin{itemize}
+ \item \textbf{Descripci\'on} : Demora al enviar acciones a los actuadores
+ \item \textbf{Probabilidad}: Media
+ \item \textbf{Impacto}: Alta
+ \item \textbf{Exposición} : Alta
+ \item \textbf{Mitigación} : En el sistema se usaran actuadores que confirman la recepci\'on de acciones.
+ \item \textbf{Plan Contingencia} : Se chequearan que las acciones fueron recibidas por los actuadores, en caso de timeout se reenviaran. Ante la primer falla se le avisar\'a al administrador
+ 
+\end{itemize}
+
+\begin{itemize}
+ \item \textbf{Descripci\'on} Volumen de informaci\'on muy grande.
+ \item \textbf{Probabilidad}: Media
+ \item \textbf{Impacto}: Alto
+ \item \textbf{Exposición}: Alto
+ \item \textbf{Mitigación}: Utilizar algoritmos para comprimir los datos
+ \item \textbf{Plan Contingencia}: Monitorear el trafico de la red y espacio de disco en los nodos de \textbf{ArSAT}
+ 
+\end{itemize}
