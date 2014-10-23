@@ -24,6 +24,7 @@
 %\usepackage{algorithm}
 %\usepackage{algorithmic}
 \usepackage{caratula}
+\usepackage{pdfpages}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      COMANDOS ÚTILES USADOS       %
@@ -96,7 +97,26 @@
 %					DESARROLLO				%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\include{plan}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{demo.png}
+  \caption{Diagrama Con las Iteraciones para la demo}
+  \label{fig:clases4}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1\textwidth]{ult.png}
+  \caption{Diagrama Con las Iteraciones posteriores a la demo}
+  \label{fig:clases4}
+\end{figure}
+
+
+\includepdf[pages={1}]{plan.pdf}
+\includepdf[pages={2}]{plan.pdf}
+\includepdf[pages={3}]{plan.pdf}
+\includepdf[pages={4}]{plan.pdf}
+\includepdf[pages={5}]{plan.pdf}
 \include{casos_de_uso}
 \include{analisis_riesgos}
 
