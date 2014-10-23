@@ -15,7 +15,7 @@
 %\usepackage{datetime}	% Para agregar automáticamente fecha/hora de compilación y otras cosas
 
 \lhead{Ingeniería de Software II} 	% {Con esto se usa el header copado. También está \chead para
-\rhead{Huerta Orgánica de Precisión} 	% el centro y comandos para el pie de página, buscar fancyhdr}
+\rhead{Big Cherry} 	% el centro y comandos para el pie de página, buscar fancyhdr}
 \renewcommand{\footrulewidth}{0.4pt}
 \lfoot{Facultad de Ciencias Exactas y Naturales}
 \rfoot{Universidad de Buenos Aires}
@@ -63,6 +63,8 @@
 \newcommand{\Obs}[1]{\textbf{Observación: }#1}
 %\newcommand{\Amat}{A \in \mathbb{R}^{n\textnormal{x}n}}
 \newcommand{\filtro}[1]{\textbf{\textit{#1}}}
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
 
 \begin{document}
 
@@ -76,7 +78,7 @@
 \submateria{Segundo Cuatrimestre de 2014}
 \titulo{Trabajo Práctico 2 \\ Big Data \& Agro - Big Cherrys}
 
-\grupo{Grupo}
+\grupo{Grupo 1}
 \integrante{Giordano, Mauro}{125/10}{mauro.foxh@gmail.com}
 \integrante{Iglesias, Axel}{79/10}{axeligl@gmail.com}
 \integrante{Lascano, Nahuel}{476/11}{laski.nahuel@gmail.com}
@@ -91,26 +93,12 @@
 %				FIN DE CARÁTULA			%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\tableofcontents
+\tableofcontents
 %\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %					DESARROLLO				%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=1\textwidth]{demo.png}
-  \caption{Diagrama Con las Iteraciones para la demo}
-  \label{fig:clases4}
-\end{figure}
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=1\textwidth]{ult.png}
-  \caption{Diagrama Con las Iteraciones posteriores a la demo}
-  \label{fig:clases4}
-\end{figure}
 
 
 \include{plan}

@@ -1,61 +1,63 @@
+\section{Análisis de Riesgos}
 
-
+\textbf{Errores en las comunicaciones}
 \begin{itemize}
- \item \textbf{Descripci\'on} : Pueden surgir errores en la comunicación con los servidores del \textbf{INTA}
- \item \textbf{Probabilidad} : Media
- \item \textbf{Impacto} : Media
- \item \textbf{Exposición} : Media
- \item \textbf{Mitigación} : Detectar fallas en la comunicación para poder reportar y seguir con el normal funcionamineto
- \item \textbf{Plan Contingencia} : Utilizar informacion de sensores e imagenes de drones para poder calcular resultados similares a los del \textbf{INTA}
- 
+ \item \textsl{Descripci\'on}: Pueden surgir errores en la comunicación con los servidores del \textbf{INTA}
+ \item \textsl{Probabilidad}: Media
+ \item \textsl{Impacto}: Media
+ \item \textsl{Exposición}: Media
+ \item \textsl{Mitigación}: Detectar fallas en la comunicación para poder reportar y seguir con el normal funcionamineto.
+ \item \textsl{Plan de Contingencia} : Utilizar informaci\'on de sensores e imágenes de drones para poder calcular resultados similares a los del \textbf{INTA}.
 \end{itemize}
 
+\textbf{Cobertura de conexión}
 \begin{itemize}
- \item \textbf{Descripci\'on}: Problemas de conectividad en zonas alejadas
- \item \textbf{Probabilidad}: Alta
- \item \textbf{Impacto}: Media
- \item \textbf{Exposición}: Media
- \item \textbf{Mitigación} : El sistema llevaria un historial con fecha en los datos externos y detectar cuando los datos son viejos usando un reloj interno.
- \item \textbf{Plan Contingencia} : Permitir la carga manual de datos y por medio de archivos.
- 
+ \item \textsl{Descripci\'on}: Problemas de conectividad en zonas sin acceso a internet u otras redes de comunicación.
+ \item \textsl{Probabilidad}: Alta
+ \item \textsl{Impacto}: Media
+ \item \textsl{Exposición}: Media
+ \item \textsl{Mitigación}: El sistema llevaría un historial con fecha de datos externos y detectaría cuándo los datos son viejos usando un reloj interno.
+ \item \textsl{Plan de Contingencia}: Permitir la carga manual de datos por medio de importación de archivos u otras fuentes.
 \end{itemize}
 
+\textbf{Vulnerabilidades en la seguridad}
 \begin{itemize}
- \item \textbf{Descripci\'on} : Cliente puede ver datos de otro client
- \item \textbf{Probabilidad}: Baja
- \item \textbf{Impacto} : Alto
- \item \textbf{Exposición} : Media
- \item \textbf{Mitigación} : Realizar test para probar casos de borde con los cuentas de clientes. Pagar a una consultora de seguridad para pruebas de seguridad
- \item \textbf{Plan Contingencia}: Permitir el apagado rapido del sistema en caso de detecci\'on de problemas de seguridad. Guardar en logs operaciones realizadas
- 
+ \item \textsl{Descripci\'on}: Cliente puede ver datos de otro cliente.
+ \item \textsl{Probabilidad}: Baja
+ \item \textsl{Impacto}: Alto
+ \item \textsl{Exposición}: Media
+ \item \textsl{Mitigación}: Realizar test para probar casos de borde con los cuentas de clientes. Pagar a una consultora de seguridad para pruebas tercerizadas.
+ \item \textsl{Plan de Contingencia}: Permitir el apagado rápido del sistema en caso de detecci\'on de problemas de seguridad. Guardar en logs las operaciones realizadas para cada dominio / cliente / empresa.
 \end{itemize}
 
+\textbf{Aumento de costos por utilizar la red privada de drones}
 \begin{itemize}
- \item \textbf{Descripci\'on} : Se utiliza mucho la red privada de drones
- \item \textbf{Probabilidad}: Media
- \item \textbf{Impacto}: Alto
- \item \textbf{Exposición} : Alto
- \item \textbf{Mitigación} : El sistema calcularia cada cierto intervalo el consumo de hect\'areas.
- \item \textbf{Plan Contingencia} : Desactivar la red privada en caso de susperar algun limite diarios, mensual, etc. Enviar alertar al administrador del sistema
- 
+ \item \textsl{Descripci\'on}: Se utiliza mucho la red privada de drones en vez de la pública.
+ \item \textsl{Probabilidad}: Media
+ \item \textsl{Impacto}: Alto
+ \item \textsl{Exposición}: Alto
+ \item \textsl{Mitigación}: El sistema calcularía cada cierto intervalo el consumo por hect\'areas.
+ \item \textsl{Plan de Contingencia} : Desactivar la red privada en caso de susperar algún límite de uso diario, mensual, etc. Enviar alertar al administrador del sistema. Si no logra acceder a la red pública pasa al caso de falta de conectividad y se aplica el plan 
 \end{itemize}
 
+\clearpage
+
+\textbf{Delays en accionar de actuadores}
 \begin{itemize}
- \item \textbf{Descripci\'on} : Demora al enviar acciones a los actuadores
- \item \textbf{Probabilidad}: Media
- \item \textbf{Impacto}: Alta
- \item \textbf{Exposición} : Alta
- \item \textbf{Mitigación} : En el sistema se usaran actuadores que confirman la recepci\'on de acciones.
- \item \textbf{Plan Contingencia} : Se chequearan que las acciones fueron recibidas por los actuadores, en caso de timeout se reenviaran. Ante la primer falla se le avisar\'a al administrador
- 
+ \item \textsl{Descripci\'on}: Demora al enviar acciones a los actuadores.
+ \item \textsl{Probabilidad}: Media
+ \item \textsl{Impacto}: Alta
+ \item \textsl{Exposición}: Alta
+ \item \textsl{Mitigación}: En el sistema se usarán actuadores que confirman la recepci\'on de acciones.
+ \item \textsl{Plan de Contingencia}: Se chequeará que las acciones fueron recibidas por los actuadores y en caso de timeout se reenviarán. Ante la primera falla se le avisar\'a al administrador / encargado.
 \end{itemize}
 
+\textbf{Problemas con almacenamiento}
 \begin{itemize}
- \item \textbf{Descripci\'on} Volumen de informaci\'on muy grande.
- \item \textbf{Probabilidad}: Media
- \item \textbf{Impacto}: Alto
- \item \textbf{Exposición}: Alto
- \item \textbf{Mitigación}: Utilizar algoritmos para comprimir los datos
- \item \textbf{Plan Contingencia}: Monitorear el trafico de la red y espacio de disco en los nodos de \textbf{ArSAT}
- 
+ \item \textsl{Descripci\'on}: Volumen de informaci\'on muy grande.
+ \item \textsl{Probabilidad}: Media
+ \item \textsl{Impacto}: Alto
+ \item \textsl{Exposición}: Alto
+ \item \textsl{Mitigación}: Utilizar algoritmos para comprimir los datos.
+ \item \textsl{Plan de Contingencia}: Monitorear el trafico de la red y espacio de disco en los nodos de \textbf{ArSAT}. Rediseñar parte de la persistencia para evitar redundancia de datos innecesaria.
 \end{itemize}
