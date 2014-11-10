@@ -1,132 +1,261 @@
 \section{Escenarios}
 \subsection{Disponibilidad}
-* Del ministerio de agricultura se quiere que el sistema funcione todo el tiempo y el Repesentante de Entidades y Productores Agr\'coles quiere poder usarlo en todo el pa\'s en todo momento. Defensa del consumidor quiere que el sistema funcione en todo el pa\'is sin problemas.
-* Repesentante de Entidades y productores Agr\'icolas tema que algunas zonas queden relegadas por motivos politicos alegando motivos t\'ecnicos
-* Los drones de la red privadad mejoran performance y disponibilidad (no se que hacer con esto)
-* el sistema se usa en una zona donde no se puede garantizar conectivdad permanente de datos de la red de datos entre os distntos artefactos.
+\textbf{Motivación}
+\begin{itemize}
+ \item Del Ministerio de Agricultura se quiere que el sistema funcione ``todo el tiempo, en todos los climas''.
+ \item A su vez, se niega a utilizar la red privada salvo que sea estrictamente necesario.
+ \item El Repesentante de Entidades y Productores Agrícolas quiere poder usarlo ``en todo el país en todo momento''.
+ \item Defensa al Consumidor coincide, el sistema debe funcionar ``en todo el país sin problemas''.
+ \item Los drones de la red privadad mejoran la disponibilidad.
+ \item El sistema se usa en una zona donde no se puede garantizar conectivdad permanente entre los distntos artefactos.
+\end{itemize}
+
 
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & \\
+\textbf{Descripci\'on} & La red de drones pública podría tener problemas. En ese caso, hay que pasar a usar la red privada. \\
 \hline 
-\textbf{Fuente} & \\
+\textbf{Fuente} & Comunicación con la red de drones \\
 \hline 
-\textbf{Estimulo} & Se pierde la conexi\'on con internet \\
+\textbf{Estimulo} & Se pierde la conexi\'on con la red estatal de drones \\
 \hline 
-\textbf{Artefacto} & Sistema\\
+\textbf{Artefacto} & Sistema de comunicación con drones \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
-\textbf{Respuesta} & \\
+\textbf{Respuesta} & Se empieza a utilizar el sistema de drones privado \\
 \hline 
-\textbf{Medici\'on} & \\
-\hline 
-\end{tabular}
-
-\begin{tabular}{| l || p{12cm} |}
-\hline 
-\textbf{Descripci\'on} & Los servidores del $INTA$ para el tiempo son nuevos y podr\'ian fallar. Debe intentar que la comunicaci\'on con el $INTA$ sea prioridad\\
-\hline 
-\textbf{Fuente} & \\
-\hline 
-\textbf{Estimulo} & los servidores de ArSat Fallan\\
-\hline 
-\textbf{Artefacto} & comunicaci\'on con ArSat\\
-\hline 
-\textbf{Entorno} & normal \\
-\hline 
-\textbf{Respuesta} & \\
-\hline 
-\textbf{Medici\'on} & \% \\
+\textbf{Medici\'on} & El cambio de sistema se realiza en el 99\% de los casos \\
 \hline 
 \end{tabular}
 
+\medskip
 
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & Responsable t\'ecnico de ArSat esta preocupado que el volumen de informaci\'on sea demasiado. El Representante de Entidades y Productores Agr\'icolas no quiere que el volumen de la informaci\'on sea un problema\\
+\textbf{Descripci\'on} & Si la red pública de drones se reestablece, debo priorizarla para ahorrar recursos estatales. \\
 \hline 
-\textbf{Fuente} & Interfaz drones\\
+\textbf{Fuente} & Comunicación con la red de drones \\
 \hline 
-\textbf{Estimulo} & se reciben im\'agenes\\
+\textbf{Estimulo} & Se restablece la conexi\'on con la red estatal de drones \\
 \hline 
-\textbf{Artefacto} & Sistema\\
+\textbf{Artefacto} & Sistema de comunicación con drones \\
 \hline 
-\textbf{Entorno} & Normal\\
+\textbf{Entorno} & Usando los drones privados \\
 \hline 
-\textbf{Respuesta} & \\
+\textbf{Respuesta} & Se empieza a utilizar el sistema de drones estatal \\
 \hline 
-\textbf{Medici\'on} & \\
+\textbf{Medici\'on} & El cambio de sistema se realiza en 24 hs a más tardar \\
+\hline 
+\end{tabular}
+
+\medskip
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Los servidores del $INTA$ para el pronóstico del tiempo son nuevos y podr\'ian fallar. Se deben comunicar las fallas de los servidores al $INTA$. \\
+\hline 
+\textbf{Fuente} & Comunicación con los servidores del $INTA$\\
+\hline 
+\textbf{Estimulo} & Los servidores del $INTA$ fallan\\
+\hline 
+\textbf{Artefacto} & Sistema de comunicación \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Se envía un mail al responsable técnico del $INTA$ anunciando la falla \\
+\hline 
+\textbf{Medici\'on} & El mail se envía en los siguientes 5 minutos \\
+\hline 
+\end{tabular}
+
+\medskip
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Tanto el Responsable T\'ecnico de ArSAT como el Representante de Entidades y Productores Agr\'icolas están preocupados por que el volumen de informaci\'on sea demasiado. El sistema debe responder bien ante grandes cantidades de datos. \\
+\hline 
+\textbf{Fuente} & Interfaz con los drones \\
+\hline 
+\textbf{Estimulo} & Se reciben las imágenes de los drones \\
+\hline 
+\textbf{Artefacto} & Sistema de procesamiento de imágenes \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Se procesan las imágenes correctamente \\
+\hline 
+\textbf{Medici\'on} & En un 99,999\% de los casos se procesan correctamente las imágenes \\
 \hline 
 \end{tabular}
 
 \subsection{Performance}
+\textbf{Motivación}
+\begin{itemize}
+ \item El Ministerio de Agricultura quiere que el sistema funcione rápido porque sino podría arruinar cosechas.
+ \item El Responsable Técnico prefiere usar los drones privados porque garantizan mayor rapidez.
+ \item Pero el Ministerio de Agricultura se opone.
+ \item El enunciado especifica que la interacción con los actuadores debe ser rápida.
+\end{itemize}
 
-* ministerio de agricultura quiere ver en un mapa de su oficina y en su celular todas las plantas como van creciendo en tiempo real.
-* red estatal de drones esta lenta.
-* interacc\'on con los actuadores debe ser r\'apida
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & La interacción con los actuadores debe ser rápida \\
+\hline 
+\textbf{Fuente} & Interfaz con los actuadores \\
+\hline 
+\textbf{Estimulo} & Se envía una órden de riego \\
+\hline 
+\textbf{Artefacto} & Manejador de los actuadores \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Los actuadores riegan la cosecha \\
+\hline 
+\textbf{Medici\'on} & El riego comienza a los 20 segundos de enviada la órden \\
+\hline 
+\end{tabular}
+
+\medskip
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Se debe priorizar el uso de drones públicos, pero pasar a los drones privados en caso de que los públicos tarden en responder \\
+\hline 
+\textbf{Fuente} & Interfaz con los drones \\
+\hline 
+\textbf{Estimulo} & Una respuesta de la red de drones pública toma más de 5 segundos \\
+\hline 
+\textbf{Artefacto} & Sistema de comunicación con drones \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Se empieza a utilizar la red de drones privada \\
+\hline 
+\textbf{Medici\'on} & El cambio del sistema se realiza en el 99\% de los casos \\
+\hline 
+\end{tabular}
+
 
 \subsection{Seguridad}
-
-* Responsable t\'ecnico de ArSat quiere un esquema de accesos y permisos para los usuarios
-* El Representante de Entidades y Productores Agr\'icola Planes maestro personales y datos de seguimiento seguros y confidenciales. Defensa del consumidor quiere asegurar confidencialidad de todos los datos involucrados
-* Defensa del consumidor quiere asegurarse que los drones no seran utilizados para espiar a la poblaci\'on
-
+\textbf{Motivación}
+\begin{itemize}
+ \item El Responsable T\'ecnico de ArSAT quiere ``un esquema serio de accesos y permisos'' para los usuarios.
+ \item El Representante de Entidades y Productores Agr\'icolas considera fundamental que los planes maestros y datos de seguimiento sean seguros y confidenciales.
+ \item Defensa al Consumidor quiere asegurar confidencialidad de todos los datos involucrados.
+\end{itemize}
 
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & Defensa del consumidor quiere auditabilidad en todas las decisiones tomadas para validar imparcialidad del sistema. Tambi\'en el El Representante de Entidades y Productores Agr\'icola quiere supervisar y manipular todas las \'ordenes enviadas a los actuadores. \\
+\textbf{Descripci\'on} & Un atacante debe ser rechazado \\
 \hline 
-\textbf{Fuente} & \\
+\textbf{Fuente} & Sistema de planes maestros \\
 \hline 
-\textbf{Estimulo} & \\
+\textbf{Estimulo} & Un usuario intenta consultar un plan maestro que no le pertenece \\
 \hline 
-\textbf{Artefacto} & \\
+\textbf{Artefacto} & Gestor de credenciales \\
 \hline 
-\textbf{Entorno} & \\
+\textbf{Entorno} & Normal \\
 \hline 
-\textbf{Respuesta} & \\
+\textbf{Respuesta} & Se rechaza la solicitud y se guarda un registro del intento \\
 \hline 
-\textbf{Medici\'on} & \\
+\textbf{Medici\'on} & La solicitud se rechaza un 99,99\% de las veces \\
 \hline 
 \end{tabular}
+
+\medskip
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Un usuario correctamente identificado debe poder acceder a sus datos \\
+\hline 
+\textbf{Fuente} & Sistema de planes maestros \\
+\hline 
+\textbf{Estimulo} & Un usuario intenta consultar sus propios planes maestros \\
+\hline 
+\textbf{Artefacto} & Gestor de credenciales \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Se permite al usuario acceder \\
+\hline 
+\textbf{Medici\'on} & La solicitud se acepta un 99,99\% de las veces \\
+\hline 
+\end{tabular}
+
+\subsubsection{Auditabilidad}
+\textbf{Motivación}
+\begin{itemize}
+ \item El Representante de Entidades y Productores Agr\'icolas quiere poder supervisar y manipular las órdenes enviadas a los actuadores.
+ \item Defensa al Consumidor quiere validar la imparcialidad del sistema, para lo cual quiere poder auditar todas las decisiones tomadas.
+ \item También quiere asegurarse que los drones no serán utilizados para espiar a la población, con lo cual quiere poder conocer las instrucciones que se le dan y la información que devuelven.
+ \item Sin embargo esto entra en conflicto con atributos de disponibilidad y performance juzgados más prioritarios.
+ \item Concluimos que se podrán auditar las decisiones humanas pero no la comunicación con los actuadores.
+\end{itemize}
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Se podrán auditar las decisiones tomadas por personas \\
+\hline 
+\textbf{Fuente} & Interfaz de configuración \\
+\hline 
+\textbf{Estimulo} & Un usuario cambia un plan maestro \\
+\hline 
+\textbf{Artefacto} & Sistema de planes maestros \\
+\hline 
+\textbf{Entorno} & Normal \\
+\hline 
+\textbf{Respuesta} & Se guarda un log del acceso y del cambio realizado \\
+\hline 
+\textbf{Medici\'on} & El log se guarda correctamente en un 99,99\% de los casos \\
+\hline 
+\end{tabular}
+
 
 \subsection{Modificabilidad}
+\textbf{Motivación}
+\begin{itemize}
+ \item El Representante de Entidades y Productores Agr\'icolas quiere poder agregar nuevos actuadores sin mucha dificultad
+\end{itemize}
 
-* El Representante de Entidades y Productores Agr\'icola quiere poder agregar nuevos actuadores
-\subsection{Usabilidad}
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & El Representante de Entidades y Productores Agr\'icolas quiere que el sistema sea f\'acil de user para todos los productores y los distintos tipos de perfiles\\
+\textbf{Descripci\'on} & Se pueden agregar actuadores fácilmente \\
 \hline 
-\textbf{Fuente} & Usuario \\
+\textbf{Fuente} & Interfaz de configuración \\
 \hline 
-\textbf{Estimulo} & \\
+\textbf{Estimulo} & Un usuario desea agregar un nuevo actuador \\
 \hline 
-\textbf{Artefacto} & \\
+\textbf{Artefacto} & Panel de configuración de actuadores \\
 \hline 
-\textbf{Entorno} & \\
+\textbf{Entorno} & Normal \\
 \hline 
-\textbf{Respuesta} & \\
+\textbf{Respuesta} & Se agrega el nuevo actuador correctamente \\
 \hline 
-\textbf{Medici\'on} & \\
+\textbf{Medici\'on} & Se puede agregar el actuador sin modificar código del sistema \\
 \hline 
 \end{tabular}
 
+\subsection{Usabilidad}
+\textbf{Motivación}
+\begin{itemize}
+ \item El Representante de Entidades y Productores Agr\'icolas quiere que el sistema sea f\'acil de usar para todos los productores y los distintos tipos de perfiles
+\end{itemize}
+
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & \\
+\textbf{Descripci\'on} & Un usuario debe poder consultar el estado de sus plantas fácilmente \\
 \hline 
-\textbf{Fuente} & \\
+\textbf{Fuente} & Interfaz web del sistema \\
 \hline 
-\textbf{Estimulo} & \\
+\textbf{Estimulo} & Un usuario quiere consultar el estado de las plantas \\
 \hline 
-\textbf{Artefacto} & \\
+\textbf{Artefacto} & Interfaz web \\
 \hline 
-\textbf{Entorno} & \\
+\textbf{Entorno} & Normal \\
 \hline 
-\textbf{Respuesta} & \\
+\textbf{Respuesta} & Se presentan al usuario las plantas presentes en sus campos junto con su información \\
 \hline 
-\textbf{Medici\'on} & \\
+\textbf{Medici\'on} & No se necesitan más de tres clics para acceder a la información \\
 \hline 
 \end{tabular}
