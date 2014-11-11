@@ -15,17 +15,17 @@
 \hline 
 \textbf{Descripci\'on} & La red de drones pública podría tener problemas. En ese caso, hay que pasar a usar la red privada. \\
 \hline 
-\textbf{Fuente} & Comunicación con la red de drones \\
+\textbf{Fuente} & Sistema central \\
 \hline 
-\textbf{Estimulo} & Se pierde la conexi\'on con la red estatal de drones \\
+\textbf{Estimulo} & Un pedido de foto de una posición \\
 \hline 
 \textbf{Artefacto} & Sistema de comunicación con drones \\
 \hline 
-\textbf{Entorno} & Normal \\
+\textbf{Entorno} & Conexión con la red de drones pública caída \\
 \hline 
-\textbf{Respuesta} & Se empieza a utilizar el sistema de drones privado \\
+\textbf{Respuesta} & La foto se saca de todos modos usando la red privada \\
 \hline 
-\textbf{Medici\'on} & El cambio de sistema se realiza en el 99\% de los casos \\
+\textbf{Medici\'on} & 9 de cada 10 veces la foto se saca correctamente \\
 \hline 
 \end{tabular}
 
@@ -35,17 +35,17 @@
 \hline 
 \textbf{Descripci\'on} & Si la red pública de drones se reestablece, debo priorizarla para ahorrar recursos estatales. \\
 \hline 
-\textbf{Fuente} & Comunicación con la red de drones \\
+\textbf{Fuente} & Sistema central \\
 \hline 
-\textbf{Estimulo} & Se restablece la conexi\'on con la red estatal de drones \\
+\textbf{Estimulo} & Un pedido de foto de una posición \\
 \hline 
 \textbf{Artefacto} & Sistema de comunicación con drones \\
 \hline 
-\textbf{Entorno} & Usando los drones privados \\
+\textbf{Entorno} & Conexión con la red de drones pública funcionando correctamente \\
 \hline 
-\textbf{Respuesta} & Se empieza a utilizar el sistema de drones estatal \\
+\textbf{Respuesta} & La foto se saca usando la red pública \\
 \hline 
-\textbf{Medici\'on} & El cambio de sistema se realiza en 24 hs a más tardar \\
+\textbf{Medici\'on} & La foto se obtiene correctamente \\
 \hline 
 \end{tabular}
 
@@ -55,7 +55,7 @@
 \hline 
 \textbf{Descripci\'on} & Los servidores del $INTA$ para el pronóstico del tiempo son nuevos y podr\'ian fallar. Se deben comunicar las fallas de los servidores al $INTA$. \\
 \hline 
-\textbf{Fuente} & Comunicación con los servidores del $INTA$\\
+\textbf{Fuente} & Comunicador con los servidores del $INTA$\\
 \hline 
 \textbf{Estimulo} & Los servidores del $INTA$ fallan\\
 \hline 
@@ -186,11 +186,11 @@
 \subsubsection{Auditabilidad}
 \textbf{Motivación}
 \begin{itemize}
- \item El Representante de Entidades y Productores Agr\'icolas quiere poder supervisar y manipular las órdenes enviadas a los actuadores.
+ \item El Representante de Entidades y Productores Agr\'icolas quiere poder supervisar las órdenes enviadas a los actuadores.
  \item Defensa al Consumidor quiere validar la imparcialidad del sistema, para lo cual quiere poder auditar todas las decisiones tomadas.
  \item También quiere asegurarse que los drones no serán utilizados para espiar a la población, con lo cual quiere poder conocer las instrucciones que se le dan y la información que devuelven.
- \item Sin embargo esto entra en conflicto con atributos de disponibilidad y performance juzgados más prioritarios.
- \item Concluimos que se podrán auditar las decisiones humanas pero no la comunicación con los actuadores.
+ \item Sin embargo esto entra en conflicto con atributos de disponibilidad y performance juzgados más prioritarios (por ejemplo, la saturación de los servidores del $INTA$).
+ \item Concluimos que se guardará siempre registro de las decisiones humanas (por ser las más importantes) y de las órdenes enviadas a los actuadores cuando el sistema tenga espacio suficiente.
 \end{itemize}
 
 \begin{tabular}{| l || p{12cm} |}
@@ -201,13 +201,33 @@
 \hline 
 \textbf{Estimulo} & Un usuario cambia un plan maestro \\
 \hline 
-\textbf{Artefacto} & Sistema de planes maestros \\
+\textbf{Artefacto} & Sistema de logging \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
 \textbf{Respuesta} & Se guarda un log del acceso y del cambio realizado \\
 \hline 
 \textbf{Medici\'on} & El log se guarda correctamente en un 99,99\% de los casos \\
+\hline 
+\end{tabular}
+
+\medskip
+
+\begin{tabular}{| l || p{12cm} |}
+\hline 
+\textbf{Descripci\'on} & Se podrán auditar las órdenes enviadas a los actuadores \\
+\hline 
+\textbf{Fuente} & Comunicación con la red de drones \\
+\hline 
+\textbf{Estimulo} & Se envía un pedido de captura de imágenes a una red \\
+\hline 
+\textbf{Artefacto} & Sistema de logging \\
+\hline 
+\textbf{Entorno} & Disco rígido al 90\% de su capacidad \\
+\hline 
+\textbf{Respuesta} & Se descarta el log de la orden enviada \\
+\hline 
+\textbf{Medici\'on} & El disco guarda únicamente los resultados de la orden \\
 \hline 
 \end{tabular}
 
@@ -232,7 +252,7 @@
 \hline 
 \textbf{Respuesta} & Se agrega el nuevo actuador correctamente \\
 \hline 
-\textbf{Medici\'on} & Se puede agregar el actuador sin modificar código del sistema \\
+\textbf{Medici\'on} & No hace falta modificar código del sistema \\
 \hline 
 \end{tabular}
 
