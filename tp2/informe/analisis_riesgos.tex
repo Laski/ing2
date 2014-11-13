@@ -1,9 +1,8 @@
 \section{Análisis de Riesgos}
-\textbf{Riesgo 1}\\
+\textbf{Riesgo 1}
+
 Desde el ministerio de agricultura se exigi\'o que en dos meses tiene que estar en funcionamiento la interacci\'on con los drones.\\
-Dado que el equipo que desarrolla de esta aplicaci\'on no tiene conocimientos sobre est\'as, se decidi\'o que esto era un importante riesgo para el proyecto.\\
-
-
+Dado que el equipo que desarrolla de esta aplicaci\'on no tiene conocimientos sobre est\'as, se decidi\'o que esto era un importante riesgo para el proyecto.
 
 \begin{itemize}
 \item \textsl{Descripci\'on}: En dos meses tienen que estar en funcionamiento la interacción con los drones estatales.
@@ -13,12 +12,13 @@ Dado que el equipo que desarrolla de esta aplicaci\'on no tiene conocimientos so
  \item \textsl{Mitigación}: Planificar los dos primeros meses focalizando solo en este problema, priorizando tareas mas riesgosas.Cada tarea deber\'ia intentar resolverse de la forma mas simple y menos general. Aislar el o los  componentes de la arquitectura que implementan la interfaz. Si es necesario hardcodear otros componentes o partes de componentes.
  \item \textsl{Plan de Contingencia} : Contratar a una empresa con experiencia en la creaci\'on de interfaces para implementar la interfaz en dos meses o comprar una si existen.
  \end{itemize}
-\textbf{Riesgo 2}\\
+ 
+\textbf{Riesgo 2}
+
  El atributo de calidad mas importante es el de disponibilidad y dado que el uso de la red de drones afecta de manera importante a esta se decidi\'o que era un riesgo.\\
- Tambi\'en Desde el ministerio de agricultura se quiere usar la red estatal y adem\'as el uso de la red privada tiene un costo.\\
+ Tambi\'en Desde el ministerio de agricultura se quiere usar la red estatal y adem\'as el uso de la red privada tiene un costo.
  
- 
-\begin{itemize}
+ \begin{itemize}
  \item \textsl{Descripci\'on}: La red privada funciona mediante un sistema de abono de datos.
  \item \textsl{Probabilidad}: Media
  \item \textsl{Impacto}: Medio
@@ -27,9 +27,9 @@ Dado que el equipo que desarrolla de esta aplicaci\'on no tiene conocimientos so
  \item \textsl{Plan de Contingencia}: En el caso de excesivos consumos se tiene la posibilidad de desactivar el uso de la red privada.
 \end{itemize}
 
-\textbf{Riesgo 3}\\
+\textbf{Riesgo 3}
 
-La falla de los actuadores son un punto critico para el correcto funcionamiento del sistema, si estos fallan el usuario final pensara que todo el sistema esta mal.\\
+La falla de los actuadores son un punto critico para el correcto funcionamiento del sistema, si estos fallan el usuario final pensara que todo el sistema esta mal.
 
 \begin{itemize}
  \item \textsl{Descripci\'on}: La interacci\'n con los actuadores debe ser r\'apida. No se deben admitir demoras de ning\'un tipo.
@@ -40,9 +40,9 @@ La falla de los actuadores son un punto critico para el correcto funcionamiento 
  \item \textsl{Plan de Contingencia} : Se deben revisar peri\'odicamente los actuadores y realizar mantenimiento de estos.
 \end{itemize}
 
-\textbf{Riesgo 4}\\
+\textbf{Riesgo 4}
 
-El acceso no autorizado a la red de nodos distribuida f\'isica o no, puede afectar gravemente a la filtraci\'on de datos por este motivo es importante considerar este riesgo.\\
+El acceso no autorizado a la red de nodos distribuida f\'isica o no, puede afectar gravemente a la filtraci\'on de datos por este motivo es importante considerar este riesgo.
 
 \begin{itemize}
  \item \textsl{Descripci\'on}: Todos los datos de seguimiento deben ser seguros y confidenciales para evitar filtrar datos a la competencia.
@@ -53,10 +53,10 @@ El acceso no autorizado a la red de nodos distribuida f\'isica o no, puede afect
  \item \textsl{Plan de Contingencia} : 
 \end{itemize}
 
-\textbf{Riesgo 5}\\
-Nuestro equipo de desarrollo piensa que el volumen de datos puede ser grande debido a la gran cantidad de informaci\'on proveniente de distintas fuentes.\\
-Hacemos enfasis en la gran cantidad de imagenes que el sistema tiene que procesar.\\
+\textbf{Riesgo 5}
 
+Nuestro equipo de desarrollo piensa que el volumen de datos puede ser grande debido a la gran cantidad de informaci\'on proveniente de distintas fuentes.\\
+Hacemos énfasis en la gran cantidad de imagenes que el sistema tiene que procesar.
 
 \begin{itemize}
  \item \textsl{Descripci\'on}: No se quiere que el volumen de la informaci\'on sea un problema. No sea cosa que se empiece a trabar todo cuando lleguen las fotitos de los drones o cuando crezcan los datos al crecer las plantitas.
@@ -67,7 +67,8 @@ Hacemos enfasis en la gran cantidad de imagenes que el sistema tiene que procesa
  \item \textsl{Plan de Contingencia} : En el caso de volumen excesivo agregar mas nodos. Tambi\'en tener mantenimiento peri\'odico
 \end{itemize}
 
-\textbf{Riesgo 6}\\
+\textbf{Riesgo 6}
+
 Como pueden existir motivos pol\'iticos en algunas zonas, necesitamos que el sistema reporte y tenga la posibilidad de guardar las fallas. \\
 Si existiera la situaci\'on donde se excusa por alguna raz\'on t\'ecnica, cuando es pol\'itica, se podr\'ia justificar o tener pruebas de que esto no es cierto.
 
@@ -80,8 +81,9 @@ Si existiera la situaci\'on donde se excusa por alguna raz\'on t\'ecnica, cuando
  \item \textsl{Plan de Contingencia} : En caso de que se presenten casos, se deberia auditar el sistema y utilizar los logs como prueba de que el sistema funciono correctamente. 
 \end{itemize}
 
-\textbf{Riesgo 7}\\
-Desde el \textbf{INTA} se nos informo que los servidores, como son nuevos, pueden fallar bastante.\\
+\textbf{Riesgo 7}
+
+Desde el \textbf{INTA} se nos informo que los servidores, como son nuevos, pueden fallar bastante.
 
 \begin{itemize}
  \item \textsl{Descripci\'on}: Pueden surgir errores en la comunicaci\'on con los servidores del \textbf{INTA}
@@ -92,8 +94,9 @@ Desde el \textbf{INTA} se nos informo que los servidores, como son nuevos, puede
  \item \textsl{Plan de Contingencia} : Reportar las fallas al \textbf{INTA} para que a futuro se solucionen
 \end{itemize}
 
-\textbf{Riego 8}\\
-Como la cobertura del sistema tiene que ser en todo el pa\'is inicialmente y dado que mucha zonas son de dif\'icil acceso, esto puede traer problemas a la hora de tener el sistema funcionando en esas zonas.\\
+\textbf{Riego 8}
+
+Como la cobertura del sistema tiene que ser en todo el pa\'is inicialmente y dado que mucha zonas son de dif\'icil acceso, esto puede traer problemas a la hora de tener el sistema funcionando en esas zonas.
 
 \begin{itemize}
  \item \textsl{Descripci\'on}: En la zona patagónica no se puede garantizar una conectividad permanente de la red de datos entre los distintos artefactos afectados al sistema,
