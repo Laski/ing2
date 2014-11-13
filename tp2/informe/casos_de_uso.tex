@@ -1,78 +1,80 @@
 \section{Casos de Uso}
 
+\subsection{Asignación de CU}
+
+Para comenzar a trabajar sobre la planificación del proyecto se identificó un conjunto de casos de uso que cubriera la mayoría de las funcionalidades que se desprenden de los requerimientos obtenidos. Los mismos se organizaron en seis iteraciones, distribuidas a lo largo de las fases de elaboración y construcción de la metodología UP. La división de los CU en las distintas iteraciones y la organización de las mismas estuvo pautada por las necesidades manifestadas por los stakeholders y un incremento de funcionalidad, partiendo del núcleo más importante y revistiendo la aplicación a lo largo del tiempo de lógica menos prioritaria.\\
+\indent Dado que la primera iteración ya contaba con un tiempo fijado (3 semanas), se determinó trabajar en este tiempo en la comunicación con la red pública de drones (ya que el Ministerio exigía que esto estuviera implementado en los primeros dos meses), la recepción y procesamiento de las imágenes, la traducción de estos datos en mediciones de los indicadores de estado de los cultivos y una mínima interacción con actuadores. Para las siguientes iteraciones se adjudicaron casos de uso que totalizaran una cantidad de tiempo similar y que implicaran una evolución coherente y funcional de la aplicación. Por ejemplo, para la segunda iteración se asignaron los casos de uso relacionados con la programación de seguimiento de cultivos, el monitoreo de la salud de las plantas y la comunicación con las estaciones climatológicas, mientras que la encrptación de datos se diagramó en la órbita de la sexta y última iteración.\\
+\indent Parte de este cronograma fue también regido por el análisis de riesgos, presentado en la \textbf{SECCION}, el cual se vio alimentado por los requerimientos iniciales y por las intervenciones de los distintos stakeholders en el QAW. De esta manera, dado que el riesgo más importante resultó ser la correcta implementación de la comunicación con la red pública de drones, se decidió incluir este desarrollo dentro de la primera iteración, de casi un mes de duración, para garantizar que haya el suficiente tiempo para llevar adelante esta tarea dentro del marco de tiempo requerido.
+
+\clearpage
+
+\subsection{Iteraciones}
+
+\textbf{Primera iteración (Elaboración)} [3 semanas]
+	\begin{enumerate}
+		\item Accediendo a la red pública de drones
+		\item Recibiendo imágenes de los drones
+		\item Procesando datos de bandas espectrales de las fotografías
+		\item Interactuando con actuadores
+	\end{enumerate}
+
+\textbf{Segunda iteración (Elaboración)} [2 semanas]
+	\begin{enumerate}
+		\item Generando mediciones de estado del terreno / cultivos a partir de fotos procesadas
+		\item Monitoreando el estado de salud de las plantas
+		\item Obteniendo información del clima a partir de las micro-estaciones climatológicas del INTA.
+		\item Calculando decisión según información recolectada y plan maestro
+	\end{enumerate}
+
+\textbf{Tercera iteración (Elaboración)} [2 semanas]
+	\begin{enumerate}
+		\item Iniciando seguimiento de cultivos / región
+		\item Incorporando nuevas especies de cultivo (ABM Cultivo)
+		\item Consultando planes maestros de cultivo provistos por el INTA / organismos privados (ABM Plan)
+		\item Consultando estado de los cultivos
+		\item Accediendo a la red privada de drones
+	\end{enumerate}
+
+\textbf{Cuarta iteración (Elaboración)} [2 semanas]
+	\begin{enumerate}
+		\item Supervisando acciones ordenadas a actuadores
+		\item Agregando muestreo manual del estado de los cultivos / terreno
+		\item Visualizando el mapa del estado del terreno
+		\item Personalizando plan maestro de cultivo
+		\item Agregando nuevos actuadores (ABM Actuador)
+	\end{enumerate}
+
+\textbf{Quinta iteración (Elaboración)} [2 semanas]
+	\begin{enumerate}
+		\item Logueando eventos del sistema
+		\item Autenticando usuario (ABM Usuario)
+		\item Autorizando usuario (ABMs Rol y Permiso)
+		\item Revisando registro de eventos
+	\end{enumerate}
+
+\textbf{Sexta iteración (Elaboración)} [2 semanas]
+	\begin{enumerate}
+		\item Manejando fallas de servidores de INTA
+		\item Descargando fotos offline de dron
+		\item Organizando información almacenada entre nodos ArSat
+		\item Encriptando / desencriptando información a almacenar
+	\end{enumerate}
+
+\clearpage
+
+\subsection{Detalle Primera iteración}
+		
 \begin{enumerate}
- \item \textbf{Monitoreo}
- \begin{enumerate}
-    \item Obteniendo datos del \textbf{INTA}\\
-    Cada un cierto intervalo de tiempo el sistema consulta al \textbf{INTA} para obtener nuevos datos de la red de micro-estaciones climatol\'ogicas.
-    \item Recibiendo imágenes de los drones\\
-	Los drones envian fotos cada cierto tiempo de las distintas áreas y Big Cherry las recibe. Se prioriza red pública sobre red privada.
-    \item Monitoreando estado de salud de las plantas\\
-	Se le permite al usuario ver el estado de sus plantas según cálculos del plan e im\'agenes.
-    \item Consultando mapa de campo\\
-	El usuario puede ver el mapa calculado luego de procesar las imágenes de los drones.
- \end{enumerate}
- \item \textbf{Interacci\'on Actuadores}
- \begin{enumerate}
-  \item Enviando Acción a Actuador\\
-   Para un determinado actuador se le envían los comandos correspondientes para su ejecución. Esto implica tanto movimiento como operaciones a llevar a cabo.
- \end{enumerate}
- \item \textbf{Seguimiento cultivos}
- \begin{enumerate}
-  \item Consultando estado de los cultivos\\
-  Big Cherry realiza cálculos con toda la informaci\'on reunida y exhibe en pantalla el estado actual de los distintos cultivos.
-  \item Iniciando seguimiento de los cultivos\\
-	El usuario carga el nuevo cultivo para realizar el seguimiento.
-  \item Ingresando indicador de estado de cultivo\\
-   Un Ing. Agr\'onomo ingresa datos de muestreo obtenidos manualmente.
+	\item \textbf{Accediendo a la red pública de drones}
+	Se refiere a la conexión y comunicación con la red estatal de drones. BigCherry debe poder iniciar una sesión dentro de la red y realizar peticiones de imágenes para ciertas coordenadas. Debe poder enviar los mensajes acorde a la especificación de la API de la red y a su vez debe poder interpretar los distintos mensajes que ésta le envía, sean de comportamiento normal o error. Esto debe permitir, además, la parametrización de los pedidos y el acceso a otros datos de los drones como disponibilidad, tiempo estimado de envío de la información, etc.
+
+	\item \textbf{Recibiendo imágenes de los drones}
+	Una vez satisfecho el pedido de imágenes aéreas, el sistema debe poder recibir las mismas sin errores y almacenarlas correctamente para su posterior procesamiento. Es importante que pueda manejar la recepción de muchas imágenes en simultáneo y que esto no afecte transimisión de otros datos con el resto de los drones.
+
+	\item \textbf{Procesando datos de bandas espectrales de las fotografías}
+	Al analizar las imágenes se deben aplicar distintos filtros para obtener datos del suelo como temperatura, humedad, salinidad del agua y otros indicadores pertinentes a la salud de las plantas. Ademśas se deben determinar posibles problemas como fotografías corruptas, mal tomadas (con obstáculos) o que presenten otro tipo de anomalías. La salida de este procesamiento debe almacenarse acorde al input procesado para posteriores consultas.
+
+	\item \textbf{Interactuando con actuadores} 
+	Este CU refiere a la interacción de BigCherry con los actuadores registrados, ya sean pulverizadoras, cosechadoras, sistemas de riego o fertilización, etc. Deben poder enviarse mensajes con directivas para que éstos lleven a cabo a través del protocolo de comunicación que maneje cada dispositivo.
 \end{enumerate}
- \item \textbf{Gesti\'on Planes}
- \begin{enumerate}
-    \item Personalizando Plan\\
-	El usuario puede usar algun plan existente y modificarlo a gusto.
- \end{enumerate}
- \item \textbf{Supervisión}
- \begin{enumerate}
-  \item Supervisando órdenes\\
-  El usuario tiene una pantalla donde puede dar de baja las operaciones próximas a realizarse. Esta posibilidad de cancelar expira con algún timeout. Esto incluye no sólo a los suministros programados para los actuadores sino también las directivas para los drones (indicaciones de desplazamiento, toma de fotos, etc).
- \end{enumerate} 
- \item \textbf{Adminsitraci\'on General}
- \begin{enumerate}
-    \item Utilizando el ABM Región\\
-	El usuario puede cargar los datos de una región de cultivo y representar cada una en entidades que abstraigan los campos.
-    \item Utilizando el ABM Cultivo\\
-	El ABM Cultivo permite administrar las distintas plantas a monitorearse.
-    \item Utilizando el ABM Actuador\\
-    Mediante este recurso se podrán registrar y organizar los actuadores a desplegar o utilizar dentro de los campos.
-    \item Utilizando el ABM Dron\\
-    Idem
-    \item Utilizando el ABM Sensor\\
-    Permite agregar en el uso de Big Cherry distintos sensores para recolección de datos.
-    \item Utilizando el ABM Cliente\\
-	Los consultores tienen acceso a este ABM para permitir manejar sus clientes.
- \end{enumerate}
- \item \textbf{Adminsitraci\'on Super Usuario}
- \begin{enumerate}
-    \item Utilizando el ABM Plan\\
-    Brinda la posibilidad de cargar planes de crecimieto para regir el monitoreo de los cultivos.
-    \item Utilizando el ABM Perfil de Usuario\\
-	Dado que el sistema debe soportar múltiples perfiles el super usuario tiene control de estos por medio de este ABM.
- \end{enumerate}
- 
- \item \textbf{Auditor\'ia}
- \begin{enumerate}
-    \item Revisando registro de decisiones tomadas\\
-	Se permite acceder a un log donde se guardan todas las operaciones realizadas por Big Cherry.
-    \item Consultando Gastos Red Privada\\
-     El sistema muestra la contabilizaci\'on de las hect\'areas fotografiadas.
-    \item Consultando reporte de fallas con el \textbf{INTA}\\
-     El sistema detecta fallas, se le permite al usuario ver un reporte de estas con este caso de uso.
- \end{enumerate}
- \item \textbf{Autenticaci\'on}
- \begin{enumerate}
-    \item Logueándose al sistema\\
-    Dado que se require seguridad es necesario tener un control se autenticaci\'on. Este caso de uso representa la forma de autenticarse en Big Cherry.
-    \item Deslogueándose del sistema\\
-    Caso para cuando el usuario o client quiere salir del sistema.
- \end{enumerate}
-\end{enumerate}
+
