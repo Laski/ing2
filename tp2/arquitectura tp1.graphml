@@ -246,7 +246,7 @@ programados<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="33.09129948053703" width="134.0" x="1148.5797512953366" y="281.8317886023645"/>
+          <y:Geometry height="33.09129948053703" width="134.0" x="1055.75" y="345.104907773349"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="40.67041015625" x="46.664794921875" y="3.0">Reloj<y:LabelModel>
