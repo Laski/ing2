@@ -1,74 +1,61 @@
 \section{Arquitectura}
 
-En esta secci\'on presentaremos y analizaremos la arquitectura pensada para resolver el trabajo, as\'i como las t\'acticas utilizadas para asegurar los atributos de calidad que se mencionaron anteriormente.
+En esta sección presentamos y analizamos la arquitectura diseñada para resolver las funcionalidades requeridas, conciliando a la vez las necesidades presentadas por los atributos de calidad y el análisis de riesgos.
 
-\subsection{Comunicaci\'on con Drones}
+\subsection{Comunicación con Drones}
 
-Para el monitoreo de las plantaciones se utilizar\'an drones que tomar\'an fotograf\'ias y luego ser\'an analizadas para recaudar la informaci\'on necesaria.  Para esto, contamos con un componente dedicado a la comunicaci\'on con las interfaces de manejo de drones que nos provee el Ministerio y la empresa privada. Se utilizar\'a por default el sistema de drones estatales, en caso de no responder a los pedidos, se pasara a utilizar el sistema privado.
-
-Para los momentos donde los drones no tengan conectividad, descargaran las im\'agenes en repositorios temporales que luego enviar\'a al comunicador.
-
-A medida que se reciben las im\'agenes, se pasan utilizando una cola al geolocalizador que se encarga de identificar las plantaciones: analizando las im\'agenes y usando la informaci\'on del repositorio de geolocalizaciones. Este componente se encarga tambi\'en de descartar las im\'agenes err\'oneas que no permiten un an\'alisis.
-
-El repositorio contiene informaci\'on ingresada por los usuarios sobre la localizaci\'on de las plantaciones, as\'i como su estado. Esta informaci\'on se utiliza para comparar con el an\'alisis que haga el geolocalizador y poder verificar de qu\'e plantaci\'on se trata.
-
-Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo para reconocer la T\textdegree, el estado del suelo y la salinidad del agua. 
-
-Este conjunto de componentes (los analizadores y el geolocalizador) tienen varias instancias corriendo en simult\'aneo para mejorar la performance.
-
-Luego de esto se procede a mergear los resultados, comprimir la imagen, y guardarlos en el repo de informaci\'on de manera encriptada.
-
-El componente encargado del pedido de im\'agenes busca en el repo de pedidos y, gracias al repo de geolocalizaci\'on, env\'ia la latitud y longitud que se desea analizar.
+Para el monitoreo de los cultivos se utilizan drones que toman fotografías de los terrenos, las cuales se procesan para extraer las mediciones necesarias sobre el estado de salud de las plantas.  Para esto, se cuenta con un componente dedicado a la comunicación con las interfaces de manejo de drones que nos proveen tanto el Ministerio como la empresa privada. Por defecto se prioriza la utilización del sistema de drones estatales, mientras que en caso de no responder a los pedidos se utiliza la red privada. Para atacar el problema de que los drones no tengan conectividad - y no se puedan recibir las imágenes tomadas por los mismos - se proveen repositorios temporales de imágenes en los nodos distribuidos de ArSat para que los aparatos descarguen las fotos tomadas. Luego, esta información se replica y reorganiza de acuerdo a la ubicación del acceso más frecuente.\\
+\indent El componente encargado del pedido de imágenes busca en el repositorio de pedidos y, gracias al repositorio de geolocalización, envía la latitud y longitud que se desea analizar. A medida que se reciben las imágenes, se pasan al geolocalizador utilizando una cola que se encarga de identificar el tipo de cultivo analizando las imágenes y usando la información del repositorio de geolocalizaciones. Este componente se encarga también de descartar las imágenes erróneas que no permitan un posterior análisis correcto. El repositorio contiene información ingresada por los usuarios sobre la localización de las plantaciones, así como su estado. Esta información se utiliza para comparar con el análisis que haga el geolocalizador y poder verificar de qué plantación se trata. Una vez taggeada, la imagen se envía a los analizadores que trabajan en paralelo para reconocer la temperatura, el estado del suelo y la salinidad del agua. Eventualmente podrían agregarse más filtros para que analicen otras bandas espectrales de las fotos. Vale observar que este conjunto de componentes (los analizadores y el geolocalizador) tienen varias instancias corriendo en simultáneo para mejorar la performance. Luego de esto se procede a unificar los resultados, comprimir las imágenes tomadas y guardar en el repo de información de manera encriptada.\\
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{./images/arq_drones.png}
-  \caption{Arquitectura de comunicaci\'on con drones y procesamiento de im\'agenes}
+  \caption{Arquitectura de comunicación con drones y procesamiento de imágenes}
   \label{fig:clases4}
 \end{figure}
 
-\subsection{Comunicaci\'on con estaciones meteorol\'ogicas}
+\subsection{Comunicación con estaciones meteorológicas}
 
-El mecanismo es bastante similar a la comunicaci\'on con drones. El comunicador establece el pedido con la estaci\'on meteorol\'ogica y luego env\'ia el paquete usando una cola al analizador, quien luego se lo env\'ia al almacenados de datos que lo agrega al repo.
+El mecanismo es bastante similar a la comunicación con drones. Existe un repositorio de pedidos de clima que puede haber sido poblado por el usuario o por el sistema de monitoreo automático. El comunicador de estación meteorológica establece el pedido a la interfaz meteorológica definida y luego envía el paquete usando una cola al analizador, quien luego se lo envía al almacenados de datos que lo agrega al repo.
 
-En caso de que la estaci\'on meteorol\'ogica no conteste, se env\'ia un mail informando de este problema.
+En caso de que la estación meteorológica no conteste, se envía un mail informando de este problema.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{./images/arq_clima.png}
-  \caption{Arquitectura de comunicaci\'on con estaciones meteorol\'ogicas y procesamiento de datos}
+  \caption{Arquitectura de comunicación con estaciones meteorológicas y procesamiento de datos}
   \label{fig:clases4}
 \end{figure}
 
 
-\subsection{Comunicaci\'on con Interfaz de usuarios}
+\subsection{Comunicación con Interfaz de usuarios}
 
-La interfaz de usuario cuenta con autenticaci\'on para asegurar el acceso a la aplicaci\'on y un sistema de logging de entradas al sistema para evitar registrar los accesos.
+La interfaz de usuario cuenta con autenticación para asegurar el acceso a la aplicación y un sistema de logging de entradas al sistema para registrar los accesos.
 
-Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. Tambi\'en se realiza la configuraci\'on de monitoreo de clima y de im\'agenes (frecuencia, horarios, etc). A su vez, se guarda un log de los cambios en la configuraci\'on que se hagan.
+Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. También se realiza la configuración de monitoreo de clima y de imágenes (frecuencia, horarios, etc). A su vez, se guarda un log de los cambios en la configuración que se hagan.
 
-El visualizados de datos utiliza la informaci\'on del repo de datos de plantaciones para mostrar en pantalla el estado actual de las plantaciones.
+El visualizados de datos utiliza la información del repo de datos de plantaciones para mostrar en pantalla el estado actual de las plantaciones.
 
-Por \'ultimo, el manager de monitoreo de im\'agenes  y de clima, se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto est\'a el repo de pedidos d\'onde el componente que pide las im\'agenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
+Por último, el manager de monitoreo de imágenes  y de clima, se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto está el repo de pedidos dónde el componente que pide las imágenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.4\textwidth]{./images/arq_interfazusuario.png}
-  \caption{Arquitectura de comunicaci\'on con la interfaz de usuario}
+  \includegraphics[width=0.8\textwidth]{./images/arq_interfazusuario.png}
+  \caption{Arquitectura de comunicación con la interfaz de usuario}
   \label{fig:clases4}
 \end{figure}
 
-\subsection{Planificaci\'on}
+\subsection{Planificación}
 
-Con la informaci\'on almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado. Luego el manager de actuadores se encarga de enviar el pedido a los distintos actuadores.
+Con la información almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado. Luego el manager de actuadores se encarga de enviar el pedido a los distintos actuadores.
 
 Todos los eventos se guardan en un repositorio para permitir la auditabilidad en caso de que sea necesario. 
 
-El controlador de estadi\'os se encarga de ir cambiando el estado de las plantas en base a los datos que se obtienen y al plan maestro.
+El controlador de estadiós se encarga de ir cambiando el estado de las plantas en base a los datos que se obtienen y al plan maestro.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{./images/arq_plan.png}
-  \caption{Arquitectura de planificaci\'on de eventos}
+  \caption{Arquitectura de planificación de eventos}
   \label{fig:clases4}
 \end{figure}
