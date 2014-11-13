@@ -12,7 +12,7 @@ El repositorio contiene informaci\'on ingresada por los usuarios sobre la locali
 
 Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo para reconocer la T\textdegree, el estado del suelo y la salinidad del agua. Luego de esto se procede a mergear los resultados y guardarlos en el repo de informaci\'on.
 
-
+Por \'ultimo, el manager de monitoreo de im\'agenes se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto est\'a el repo de pedidos d\'onde el componente que pide las im\'agenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
 
 \begin{figure}[h!]
   \centering
@@ -21,6 +21,10 @@ Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo
   \label{fig:clases4}
 \end{figure}
 
+\subsection{Comunicaci\'on con estaciones meteorol\'ogicas}
+
+El mecanismo es bastante similar a la comunicaci\'on con drones. El comunicador establece el pedido con la estaci\'on meteorol\'ogica y luego env\'ia el paquete usando una cola al analizador, quien luego se lo env\'ia al almacenados de datos que lo agrega al repo.
+
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{./images/arq_clima.png}
@@ -28,12 +32,21 @@ Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo
   \label{fig:clases4}
 \end{figure}
 
+
+\subsection{Comunicaci\'on con Interfaz de usuarios}
+
+Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. Tambi\'en se realiza la configuraci\'on de monitoreo de clima y de im\'agenes (frecuencia, horarios, etc).
+
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.4\textwidth]{./images/arq_interfazusuario.png}
   \caption{Arquitectura de comunicaci\'on con la interfaz de usuario}
   \label{fig:clases4}
 \end{figure}
+
+\subsection{Planificaci\'on}
+
+Con la informaci\'on almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado.
 
 \begin{figure}[h!]
   \centering
