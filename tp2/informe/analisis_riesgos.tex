@@ -1,108 +1,88 @@
 \section{Análisis de Riesgos}
-\textbf{Riesgo 1}
 
-Desde el ministerio de agricultura se exigi\'o que en dos meses tiene que estar en funcionamiento la interacci\'on con los drones.\\
-Dado que el equipo que desarrolla de esta aplicaci\'on no tiene conocimientos sobre est\'as, se decidi\'o que esto era un importante riesgo para el proyecto.
+\underline{Riesgo 1}
 
-\begin{itemize}
-\item \textsl{Descripci\'on}: En dos meses tienen que estar en funcionamiento la interacción con los drones estatales.
- \item \textsl{Probabilidad}: Alta
- \item \textsl{Impacto}: Alto
- \item \textsl{Exposición}: Alta
- \item \textsl{Mitigación}: Planificar los dos primeros meses focalizando solo en este problema, priorizando tareas mas riesgosas.Cada tarea deber\'ia intentar resolverse de la forma mas simple y menos general. Aislar el o los  componentes de la arquitectura que implementan la interfaz. Si es necesario hardcodear otros componentes o partes de componentes.
- \item \textsl{Plan de Contingencia} : Contratar a una empresa con experiencia en la creaci\'on de interfaces para implementar la interfaz en dos meses o comprar una si existen.
- \end{itemize}
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Desde el ministerio de agricultura se exigió que en los primeros dos meses debe estar en funcionamiento la interacción con los drones de la red pública. Dado que el equipo que desarrolla esta aplicación no tiene conocimientos sobre la misma y tampoco hay buena documentación, es posible que no se llegue a cumplir el plazo.
+    \item \textbf{Probabilidad}: Alta
+    \item \textbf{Impacto}: Alto
+    \item \textbf{Exposición}: Alta
+    \item \textbf{Mitigación}: Priorizar el desarrollo de la interacción con los drones estatales, incluyéndolo en la primera iteración y asignando la suficiente cantidad de horas, con el recaudo de que se pueda incluir en la iteración posterior ante eventuales demoras.
+    \item \textbf{Plan de Contingencia}: Tercerizar el desarrollo de la comunicación a una empresa con experiencia en la creación de interfaces o comprar el paquete de software provisto por el Estado.
+\end{itemize}
  
-\textbf{Riesgo 2}
+\underline{Riesgo 2} 
 
- El atributo de calidad mas importante es el de disponibilidad y dado que el uso de la red de drones afecta de manera importante a esta se decidi\'o que era un riesgo.\\
- Tambi\'en Desde el ministerio de agricultura se quiere usar la red estatal y adem\'as el uso de la red privada tiene un costo.
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Es importante la disponibilidad constante del servicio, sin embargo se sabe que la red pública no tiene un 100\% de cobertura en el territorio del país, además de que pueden presentarse problemas de conectividad (por ejemplo, zona patagónica).
+    \item \textbf{Probabilidad}: Media
+    \item \textbf{Impacto}: Alto
+    \item \textbf{Exposición}: Alta
+    \item \textbf{Mitigación}: Permitir la carga manual de datos por parte de los consultores y usuarios. En los casos en que los drones no tengan conectividad, implementar la descarga offline de los dispositivos en alguno de los nodos distribuidos de ArSat, información que luego se replicará por todo el sistema.
+    \item \textbf{Plan de Contingencia}: Contratar servicios satelitales privados que provean conectividad por fuera del Estado / telefónicas locales.
+\end{itemize}
+
+\underline{Riesgo 3}
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: La interacción con los actuadores debe ser rápida. No se deben admitir demoras de ningún tipo. Si hubiera fallas el usuario podría pensar que la ausencia de acciones implica que el sistema procesa mal.
+    \item \textbf{Probabilidad}: Media 
+    \item \textbf{Impacto}: Alto
+    \item \textbf{Exposición}: Alta
+    \item \textbf{Mitigación}: En la arquitectura se definen múltiples manejadores de actuadores para paralelizar las comunicaciones, además de que se prioriza el envío de estas acciones para evitar demoras por mala adjudicación de recursos. Además se realiza un ping frecuente a los actuadores para detectar fallas tempranamente y poder actuar o avisar en consecuencia.
+    \item \textbf{Plan de Contingencia}: Enviar un mail o sms al productor o encargado del terreno monitoreado para que lleve a cabo las directivas manualmente.
+\end{itemize}
+
+\underline{Riesgo 4}
+
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Todos los datos de seguimiento deben estar almacenados de forma segura y confidencial para evitar vulneraciones por parte de la competencia u otros atacantes.
+    \item \textbf{Probabilidad}: Baja
+    \item \textbf{Impacto}: Medio
+    \item \textbf{Exposición}: Baja
+    \item \textbf{Mitigación}: Encriptar todos los datos almacenados y comunicación entre los nodos. Revestir los protocolos de autenticación y autorización de usuarios, por ejemplo agregando \textit{2-step verification}.
+    \item \textbf{Plan de Contingencia}: Ante la detección de intromisiones aislar los datasources interrumpiendo su conexión con el resto del sistema hasta tanto se solucione el problema.
+\end{itemize}
+
+\underline{Riesgo 5}
+
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: No se quiere que la cantidad de información almacenada sea un problema. Existe la posibilidad de que debido al volumen de datos obtenido de distintas fuentes se colapse el almacenamiento o se ralentice el uso de BigCherry.
+    \item \textbf{Probabilidad}: Alta
+    \item \textbf{Impacto}: Medio	
+    \item \textbf{Exposición}: Alta
+    \item \textbf{Mitigación}: Comprimir los datos almacenados utilizando estructuras eficientes. Guardar muestras significativas de un período de tiempo y eliminar redundancias si no hubo cambios entre distintas fotografías. Utilizar una infraestructura de nodos distribuidos por todo el país para minimizar los tiempos de acceso según ubicación geográfica.
+    \item \textbf{Plan de Contingencia}: En el caso de que el almacenamiento colapsara contratar datacenters externos (como Amazon) e integrarlos hasta que se logre escalar la infraestructura local.
+\end{itemize}
+
+\underline{Riesgo 6}
+
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Desde el \textbf{INTA} se nos informó que los servidores - como son nuevos - pueden fallar frecuentemente, produciendo errores en el monitoreo del clima.
+    \item \textbf{Probabilidad}: Media
+    \item \textbf{Impacto}: Medio
+    \item \textbf{Exposición}: Media
+    \item \textbf{Mitigación}: Realizar un monitoreo de la conexión con los servidores para obtener un perfil estadístico de las fallas, identificando momentos del día u otras características que puedan ayudar a prevenir los errores. Disponer de canales de información climatológica secundarios.
+    \item \textbf{Plan de Contingencia}: Contactar otro servidor que responda perteneciente a la zona geográfica más cercana, aunque implique menos precisión del clima. También permitir ingresar a mano indicadores climatológicos (sólo ante emergencias).
+\end{itemize}
  
- \begin{itemize}
- \item \textsl{Descripci\'on}: La red privada funciona mediante un sistema de abono de datos.
- \item \textsl{Probabilidad}: Media
- \item \textsl{Impacto}: Medio
- \item \textsl{Exposición}: Media
- \item \textsl{Mitigación}: Utilizar un algoritmo para maximizar uso de la red publica en las regiones.
- \item \textsl{Plan de Contingencia}: En el caso de excesivos consumos se tiene la posibilidad de desactivar el uso de la red privada.
+\underline{Riesgo 7}
+
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Cuando no hay cobertura de la red pública de drones se utiliza la privada, lo cual significa incurrir en costos según el abono de datos. Si esto no se regula con precisión podría incurrirse en gastos excesivos e innecesarios.
+    \item \textbf{Probabilidad}: Media
+    \item \textbf{Impacto}: Medio
+    \item \textbf{Exposición}: Media
+    \item \textbf{Mitigación}: Utilizar un algoritmo para maximizar uso de la red pública dependiendo de las regiones que se quiere fotografiar.
+    \item \textbf{Plan de Contingencia}: Establecer una cota de gastos tal que al superarse el límite se suspenda la conexión con la red privada y se informe a quien corresponda.
 \end{itemize}
 
-\textbf{Riesgo 3}
+\underline{Riesgo 8}
 
-La falla de los actuadores son un punto critico para el correcto funcionamiento del sistema, si estos fallan el usuario final pensara que todo el sistema esta mal.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: La interacci\'n con los actuadores debe ser r\'apida. No se deben admitir demoras de ning\'un tipo.
- \item \textsl{Probabilidad}: Media 
- \item \textsl{Impacto}: Alto
- \item \textsl{Exposición}: Alta
- \item \textsl{Mitigación}: En la arquitectura se utilizaran t\'ecnicas para dar prioridad a las ordenes enviadas y as\'i evitar que otros procesos o acciones generen una demora con la comunicaci\'on de los actuadores. Revisar parametros de los sensores para detectar fallas.
- \item \textsl{Plan de Contingencia} : Se deben revisar peri\'odicamente los actuadores y realizar mantenimiento de estos.
-\end{itemize}
-
-\textbf{Riesgo 4}
-
-El acceso no autorizado a la red de nodos distribuida f\'isica o no, puede afectar gravemente a la filtraci\'on de datos por este motivo es importante considerar este riesgo.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: Todos los datos de seguimiento deben ser seguros y confidenciales para evitar filtrar datos a la competencia.
- \item \textsl{Probabilidad}: Baja
- \item \textsl{Impacto}: Medio
- \item \textsl{Exposición}: Media
- \item \textsl{Mitigación}: Encriptar todos los datos almacenados y comunicaci\'on entre los nodos. Intentar agregar un nivel adicional de seguridad para la ubicaci\'on de la clave secreta.
- \item \textsl{Plan de Contingencia} : 
-\end{itemize}
-
-\textbf{Riesgo 5}
-
-Nuestro equipo de desarrollo piensa que el volumen de datos puede ser grande debido a la gran cantidad de informaci\'on proveniente de distintas fuentes.\\
-Hacemos énfasis en la gran cantidad de imagenes que el sistema tiene que procesar.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: No se quiere que el volumen de la informaci\'on sea un problema. No sea cosa que se empiece a trabar todo cuando lleguen las fotitos de los drones o cuando crezcan los datos al crecer las plantitas.
- \item \textsl{Probabilidad}: Media
- \item \textsl{Impacto}: Alto	
- \item \textsl{Exposición}: Baja
- \item \textsl{Mitigación}: Utilizar una infraestructura de nodos distribuidos por todo el país. Utilizar alguna tecnica para guardar informacion geografica
- \item \textsl{Plan de Contingencia} : En el caso de volumen excesivo agregar mas nodos. Tambi\'en tener mantenimiento peri\'odico
-\end{itemize}
-
-\textbf{Riesgo 6}
-
-Como pueden existir motivos pol\'iticos en algunas zonas, necesitamos que el sistema reporte y tenga la posibilidad de guardar las fallas. \\
-Si existiera la situaci\'on donde se excusa por alguna raz\'on t\'ecnica, cuando es pol\'itica, se podr\'ia justificar o tener pruebas de que esto no es cierto.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: Zonas relegadas por motivos politicos alegando motivos t\'ecnicos
- \item \textsl{Probabilidad}: Media
- \item \textsl{Impacto}: Alto
- \item \textsl{Exposición}: Baja
- \item \textsl{Mitigación}: Reportar el estado del sistema visualmente para evitar falsas acusaciones. Tambi\'en guardar registros de fallas t\'ecnicas
- \item \textsl{Plan de Contingencia} : En caso de que se presenten casos, se deberia auditar el sistema y utilizar los logs como prueba de que el sistema funciono correctamente. 
-\end{itemize}
-
-\textbf{Riesgo 7}
-
-Desde el \textbf{INTA} se nos informo que los servidores, como son nuevos, pueden fallar bastante.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: Pueden surgir errores en la comunicaci\'on con los servidores del \textbf{INTA}
- \item \textsl{Probabilidad}: Media
- \item \textsl{Impacto}: Media
- \item \textsl{Exposición}: Media
- \item \textsl{Mitigación}: Detectar fallas en la comunicación.
- \item \textsl{Plan de Contingencia} : Reportar las fallas al \textbf{INTA} para que a futuro se solucionen
-\end{itemize}
-
-\textbf{Riego 8}
-
-Como la cobertura del sistema tiene que ser en todo el pa\'is inicialmente y dado que mucha zonas son de dif\'icil acceso, esto puede traer problemas a la hora de tener el sistema funcionando en esas zonas.
-
-\begin{itemize}
- \item \textsl{Descripci\'on}: En la zona patagónica no se puede garantizar una conectividad permanente de la red de datos entre los distintos artefactos afectados al sistema,
- \item \textsl{Probabilidad}: Alta
- \item \textsl{Impacto}: Media
- \item \textsl{Exposición}: Baja
- \item \textsl{Mitigación}: Permitir la carga manual de datos por medio de importación de archivos u otras fuentes.
- \item \textsl{Plan de Contingencia}: Considerar el uso de comunicaci\'on satelital para zonas de dif\'icil acceso. Para los dispositivos alguna t\'ecnologia alternativa de largo alcance.
+\begin{itemize} \itemsep -2pt
+    \item \textbf{Descripción}: Si bien se quiere que el sistema tenga uso y cobertura en todo el territorio nacional, es posible que potenciales usarios no quieran usarlo por la participación del INTA y del Estado, así como también podría haber oposición política (frente al oficialismo) que atente contra el uso de BigCherry alegando problemas técnicos.
+    \item \textbf{Probabilidad}: Baja
+    \item \textbf{Impacto}: Bajo
+    \item \textbf{Exposición}: Baja
+    \item \textbf{Mitigación}: Comunicar las medidas de seguridad y confidencialidad de datos para garantizar la integridad y privacidad de los mismos. Informar públicamente el estado y disponibilidad del sistema para evitar falsas acusaciones de no funcionamiento.
+    \item \textbf{Plan de Contingencia}: En caso de que no se haya convencido a los usuarios bonificarles el servicio y la personalización de planes para alentar el uso del sistema.
 \end{itemize}
