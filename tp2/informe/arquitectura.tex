@@ -16,9 +16,7 @@ Para el monitoreo de los cultivos se utilizan drones que toman fotografías de l
 
 \subsection{Comunicación con estaciones meteorológicas}
 
-El mecanismo es bastante similar a la comunicación con drones. Existe un repositorio de pedidos de clima que puede haber sido poblado por el usuario o por el sistema de monitoreo automático. El comunicador de estación meteorológica establece el pedido a la interfaz meteorológica definida y luego envía el paquete usando una cola al analizador, quien luego se lo envía al almacenados de datos que lo agrega al repo.
-
-En caso de que la estación meteorológica no conteste, se envía un mail informando de este problema.
+El mecanismo es bastante similar a la comunicación con drones. Existe un repositorio de pedidos de clima que puede haber sido poblado por el usuario o por el sistema de monitoreo automático. El comunicador de estación meteorológica establece el pedido a la interfaz meteorológica definida y luego envía el paquete usando una cola al analizador, quien luego se lo envía al almacenados de datos que lo agrega al repo. Como primera opción se accede a los servidores meteorológicos del INTA, pero en caso de fallas se utiliza una cadena de opciones alternativas para obtener otros datos, aunque no sean tan precisos. Además, como última opción ante las fallas se envía un mail informando de este problema.
 
 \begin{figure}[h!]
   \centering
@@ -31,11 +29,7 @@ En caso de que la estación meteorológica no conteste, se envía un mail inform
 \subsection{Comunicación con Interfaz de usuarios}
 
 La interfaz de usuario cuenta con autenticación para asegurar el acceso a la aplicación y un sistema de logging de entradas al sistema para registrar los accesos.
-
-Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. También se realiza la configuración de monitoreo de clima y de imágenes (frecuencia, horarios, etc). A su vez, se guarda un log de los cambios en la configuración que se hagan.
-
-El visualizados de datos utiliza la información del repo de datos de plantaciones para mostrar en pantalla el estado actual de las plantaciones.
-
+Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. También se realiza la configuración de monitoreo de clima y de imágenes (frecuencia, horarios, etc). A su vez, se guarda un log de los cambios en la configuración que se hagan. El visualizados de datos utiliza la información del repo de datos de plantaciones para mostrar en pantalla el estado actual de las plantaciones.
 Por último, el manager de monitoreo de imágenes  y de clima, se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto está el repo de pedidos dónde el componente que pide las imágenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
 
 \begin{figure}[h!]
@@ -47,11 +41,7 @@ Por último, el manager de monitoreo de imágenes  y de clima, se encarga de ir 
 
 \subsection{Planificación}
 
-Con la información almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado. Luego el manager de actuadores se encarga de enviar el pedido a los distintos actuadores.
-
-Todos los eventos se guardan en un repositorio para permitir la auditabilidad en caso de que sea necesario. 
-
-El controlador de estadiós se encarga de ir cambiando el estado de las plantas en base a los datos que se obtienen y al plan maestro.
+Con la información almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado. Luego el manager de actuadores se encarga de enviar el pedido a los distintos actuadores. Todos los eventos se guardan en un repositorio para permitir la auditabilidad en caso de que sea necesario. El controlador de estadiós se encarga de ir cambiando el estado de las plantas en base a los datos que se obtienen y al plan maestro.
 
 \begin{figure}[h!]
   \centering
