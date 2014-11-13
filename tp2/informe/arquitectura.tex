@@ -6,13 +6,19 @@ En esta secci\'on presentaremos y analizaremos la arquitectura pensada para reso
 
 Para el monitoreo de las plantaciones se utilizar\'an drones que tomar\'an fotograf\'ias y luego ser\'an analizadas para recaudar la informaci\'on necesaria.  Para esto, contamos con un componente dedicado a la comunicaci\'on con las interfaces de manejo de drones que nos provee el Ministerio y la empresa privada. Se utilizar\'a por default el sistema de drones estatales, en caso de no responder a los pedidos, se pasara a utilizar el sistema privado.
 
+Para los momentos donde los drones no tengan conectividad, descargaran las im\'agenes en repositorios temporales que luego enviar\'a al comunicador.
+
 A medida que se reciben las im\'agenes, se pasan utilizando una cola al geolocalizador que se encarga de identificar las plantaciones: analizando las im\'agenes y usando la informaci\'on del repositorio de geolocalizaciones. Este componente se encarga tambi\'en de descartar las im\'agenes err\'oneas que no permiten un an\'alisis.
 
 El repositorio contiene informaci\'on ingresada por los usuarios sobre la localizaci\'on de las plantaciones, as\'i como su estado. Esta informaci\'on se utiliza para comparar con el an\'alisis que haga el geolocalizador y poder verificar de qu\'e plantaci\'on se trata.
 
-Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo para reconocer la T\textdegree, el estado del suelo y la salinidad del agua. Luego de esto se procede a mergear los resultados y guardarlos en el repo de informaci\'on.
+Una vez tageada la imagen se env\'ia a los analizadores que trabajan en paralelo para reconocer la T\textdegree, el estado del suelo y la salinidad del agua. 
 
-Por \'ultimo, el manager de monitoreo de im\'agenes se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto est\'a el repo de pedidos d\'onde el componente que pide las im\'agenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
+Este conjunto de componentes (los analizadores y el geolocalizador) tienen varias instancias corriendo en simult\'aneo para mejorar la performance.
+
+Luego de esto se procede a mergear los resultados, comprimir la imagen, y guardarlos en el repo de informaci\'on de manera encriptada.
+
+El componente encargado del pedido de im\'agenes busca en el repo de pedidos y, gracias al repo de geolocalizaci\'on, env\'ia la latitud y longitud que se desea analizar.
 
 \begin{figure}[h!]
   \centering
@@ -25,6 +31,8 @@ Por \'ultimo, el manager de monitoreo de im\'agenes se encarga de ir agregando l
 
 El mecanismo es bastante similar a la comunicaci\'on con drones. El comunicador establece el pedido con la estaci\'on meteorol\'ogica y luego env\'ia el paquete usando una cola al analizador, quien luego se lo env\'ia al almacenados de datos que lo agrega al repo.
 
+En caso de que la estaci\'on meteorol\'ogica no conteste, se env\'ia un mail informando de este problema.
+
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1\textwidth]{./images/arq_clima.png}
@@ -35,7 +43,13 @@ El mecanismo es bastante similar a la comunicaci\'on con drones. El comunicador 
 
 \subsection{Comunicaci\'on con Interfaz de usuarios}
 
-Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. Tambi\'en se realiza la configuraci\'on de monitoreo de clima y de im\'agenes (frecuencia, horarios, etc).
+La interfaz de usuario cuenta con autenticaci\'on para asegurar el acceso a la aplicaci\'on y un sistema de logging de entradas al sistema para evitar registrar los accesos.
+
+Utilizando la interfaz de usuario, se permite agregar datos sobre las plantaciones de manera manual. Tambi\'en se realiza la configuraci\'on de monitoreo de clima y de im\'agenes (frecuencia, horarios, etc). A su vez, se guarda un log de los cambios en la configuraci\'on que se hagan.
+
+El visualizados de datos utiliza la informaci\'on del repo de datos de plantaciones para mostrar en pantalla el estado actual de las plantaciones.
+
+Por \'ultimo, el manager de monitoreo de im\'agenes  y de clima, se encarga de ir agregando los pedidos que deben realizarse para que luego se vayan realizando. Para esto est\'a el repo de pedidos d\'onde el componente que pide las im\'agenes se conecta de manera blackboard y luego realiza la solicitud usando el comunicador con los drones.
 
 \begin{figure}[h!]
   \centering
@@ -46,7 +60,11 @@ Utilizando la interfaz de usuario, se permite agregar datos sobre las plantacion
 
 \subsection{Planificaci\'on}
 
-Con la informaci\'on almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado.
+Con la informaci\'on almacenada en los repositorios, el planificador arma los eventos que deben realizarse para continuar con el plan de trabajo deseado. Luego el manager de actuadores se encarga de enviar el pedido a los distintos actuadores.
+
+Todos los eventos se guardan en un repositorio para permitir la auditabilidad en caso de que sea necesario. 
+
+El controlador de estadi\'os se encarga de ir cambiando el estado de las plantas en base a los datos que se obtienen y al plan maestro.
 
 \begin{figure}[h!]
   \centering
