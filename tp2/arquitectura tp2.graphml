@@ -340,7 +340,7 @@ Pedidos<y:LabelModel>
       <data key="d4"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="40.0" width="100.0" x="1259.0943181818184" y="741.6396342884404"/>
+          <y:Geometry height="40.0" width="100.0" x="1251.7870502773092" y="731.5196239124639"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" modelName="custom" textColor="#000000" visible="true" width="91.70556640625" x="4.147216796875" y="3.0">Planificador<y:LabelModel>

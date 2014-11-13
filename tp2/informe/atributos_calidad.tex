@@ -15,7 +15,7 @@
 \hline 
 \textbf{Descripci\'on} & La red de drones pública podría tener problemas. En ese caso, hay que pasar a usar la red privada. \\
 \hline 
-\textbf{Fuente} & Sistema central \\
+\textbf{Fuente} & Pedidos de imágenes \\
 \hline 
 \textbf{Estimulo} & Un pedido de foto de una posición \\
 \hline 
@@ -35,7 +35,7 @@
 \hline 
 \textbf{Descripci\'on} & Si la red pública de drones se reestablece, debo priorizarla para ahorrar recursos estatales. \\
 \hline 
-\textbf{Fuente} & Sistema central \\
+\textbf{Fuente} & Pedidos de imágenes \\
 \hline 
 \textbf{Estimulo} & Un pedido de foto de una posición \\
 \hline 
@@ -55,11 +55,11 @@
 \hline 
 \textbf{Descripci\'on} & Los servidores del $INTA$ para el pronóstico del tiempo son nuevos y podr\'ian fallar. Se deben comunicar las fallas de los servidores al $INTA$. \\
 \hline 
-\textbf{Fuente} & Comunicador con los servidores del $INTA$\\
+\textbf{Fuente} & Interfaz Estación Meteorológica\\
 \hline 
 \textbf{Estimulo} & Los servidores del $INTA$ fallan\\
 \hline 
-\textbf{Artefacto} & Sistema de comunicación \\
+\textbf{Artefacto} & Comunicador Estación Meteorológica \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
@@ -85,7 +85,7 @@
 \hline 
 \textbf{Respuesta} & Se procesan las imágenes correctamente \\
 \hline 
-\textbf{Medici\'on} & En un 99,999\% de los casos se procesan correctamente las imágenes \\
+\textbf{Medici\'on} & En un 99\% de los casos se procesan correctamente las imágenes \\
 \hline 
 \end{tabular}
 
@@ -102,11 +102,11 @@
 \hline 
 \textbf{Descripci\'on} & La interacción con los actuadores debe ser rápida \\
 \hline 
-\textbf{Fuente} & Interfaz con los actuadores \\
+\textbf{Fuente} & Planificador \\
 \hline 
-\textbf{Estimulo} & Se envía una órden de riego \\
+\textbf{Estimulo} & Se envía una orden de riego \\
 \hline 
-\textbf{Artefacto} & Manejador de los actuadores \\
+\textbf{Artefacto} & Manejador de actuadores \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
@@ -124,7 +124,7 @@
 \hline 
 \textbf{Fuente} & Interfaz con los drones \\
 \hline 
-\textbf{Estimulo} & Una respuesta de la red de drones pública toma más de 5 segundos \\
+\textbf{Estimulo} & Una respuesta de la red de drones pública toma más de 10 segundos \\
 \hline 
 \textbf{Artefacto} & Sistema de comunicación con drones \\
 \hline 
@@ -132,7 +132,7 @@
 \hline 
 \textbf{Respuesta} & Se empieza a utilizar la red de drones privada \\
 \hline 
-\textbf{Medici\'on} & El cambio del sistema se realiza en el 99\% de los casos \\
+\textbf{Medici\'on} & El cambio del sistema se realiza en menos de 20 segundos \\
 \hline 
 \end{tabular}
 
@@ -149,11 +149,11 @@
 \hline 
 \textbf{Descripci\'on} & Un atacante debe ser rechazado \\
 \hline 
-\textbf{Fuente} & Sistema de planes maestros \\
+\textbf{Fuente} & Gestor de configuración \\
 \hline 
 \textbf{Estimulo} & Un usuario intenta consultar un plan maestro que no le pertenece \\
 \hline 
-\textbf{Artefacto} & Gestor de credenciales \\
+\textbf{Artefacto} & Gestor de autenticación \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
@@ -173,7 +173,7 @@
 \hline 
 \textbf{Estimulo} & Un usuario intenta consultar sus propios planes maestros \\
 \hline 
-\textbf{Artefacto} & Gestor de credenciales \\
+\textbf{Artefacto} & Gestor de autenticación \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 
@@ -197,7 +197,7 @@
 \hline 
 \textbf{Descripci\'on} & Se podrán auditar las decisiones tomadas por personas \\
 \hline 
-\textbf{Fuente} & Interfaz de configuración \\
+\textbf{Fuente} & Gestor de configuración \\
 \hline 
 \textbf{Estimulo} & Un usuario cambia un plan maestro \\
 \hline 
@@ -215,9 +215,9 @@
 
 \begin{tabular}{| l || p{12cm} |}
 \hline 
-\textbf{Descripci\'on} & Se podrán auditar las órdenes enviadas a los actuadores \\
+\textbf{Descripci\'on} & Las órdenes enviadas a los actuadores no se guardarán cuando haya poco espacio disponible \\
 \hline 
-\textbf{Fuente} & Comunicación con la red de drones \\
+\textbf{Fuente} & Mánager de Monitoreo de imágenes \\
 \hline 
 \textbf{Estimulo} & Se envía un pedido de captura de imágenes a una red \\
 \hline 
@@ -252,7 +252,7 @@
 \hline 
 \textbf{Respuesta} & Se agrega el nuevo actuador correctamente \\
 \hline 
-\textbf{Medici\'on} & No hace falta modificar código del sistema \\
+\textbf{Medici\'on} & El agregado toma 5 horas hombre o menos \\
 \hline 
 \end{tabular}
 
@@ -266,11 +266,11 @@
 \hline 
 \textbf{Descripci\'on} & Un usuario debe poder consultar el estado de sus plantas fácilmente \\
 \hline 
-\textbf{Fuente} & Interfaz web del sistema \\
+\textbf{Fuente} & Interfaz de usuario \\
 \hline 
 \textbf{Estimulo} & Un usuario quiere consultar el estado de las plantas \\
 \hline 
-\textbf{Artefacto} & Interfaz web \\
+\textbf{Artefacto} & Interfaz de usuario \\
 \hline 
 \textbf{Entorno} & Normal \\
 \hline 

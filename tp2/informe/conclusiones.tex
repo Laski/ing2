@@ -1,0 +1,38 @@
+\section{Conclusiones}
+Desde el punto de vista del desarrollo tenemos pocas herramientas para comparar los métodos usados a lo largo de la materia (Scrum y UP),
+dado que trabajando con Scrum realizamos una única iteración y trabajando con UP ni siquiera llegamos a desarrollar nada efectivamente.
+Además, como cada método lo aplicamos a proyectos de tamaños distintos, la comparación que hagamos estará sesgada por cosas propias de la
+complejidad de los problemas que quizás no forman parte de la metodología en sí, entorpeciendo nuestra capacidad de diferenciarlas únicamente
+por sus características.
+
+Sin embargo, sí pudimos comparar las etapas iniciales de ambas metodologías, viendo claramente una diferencia entre realizar una planificación
+y un diseño antes de comenzar a programar; y empezar a programar sin planificación previa e ir diseñando a medida que se desarrolla. Si bien
+en el primer TP consideramos que nuestra aplicación de Scrum era imperfecta pues estábamos acostumbrados a diseñar por adelantado,
+en este segundo TP descubrimos que se puede planificar a un nivel más profundo del que conocíamos.
+
+Desde un punto de vista subjetivo, podemos resaltar de UP la priorización de los atributos de calidad como ``drivers'' de las decisiones arquitectónicas,
+entendiendo que con Scrum se podrían perder de vista en pos de resolver cuestiones funcionales, y que modificar una aplicación ya construida para que
+satisfaga cierto atributo de calidad no contemplado previamente es mucho más costoso que diseñarla teniéndolo en cuenta desde un principio.
+
+Sin embargo, preferimos Scrum a la hora de organizar los tiempos y responsabilidades del proyecto. Como ya dijimos no tuvimos la oportunidad de
+experimentarlo nosotros mismos, pero consideramos que, por ejemplo, un error en la estimación de esfuerzo en Scrum tiene consecuencias mínimas
+en comparación con las que tendría el mismo error (de estimación de horas/hombre) en UP: en Scrum como mucho una historia quedará afuera de una iteración y
+tendrá que ser subdividida más adelante, mientras que en UP puede producir un efecto dominó que afecta todas las iteraciones posteriores
+(porque ya se planificaron previamente) y eventualmente postergar todo el proyecto en caso de que la tarea sea crítica.
+
+Entendemos, de todos modos, que combinar las características que destacamos de cada una de las metodologías es no-trivial. Afortunadamente, proponer una metodología
+superadora excede el scope de este trabajo práctico.
+
+A la hora de la comparación entre ``programming in the small'' y ``programming in the large'' podemos mencionar la diferencia entre las vistas más usadas: a la hora del 
+diseño OO utilizamos tanto diagramas de clases (estático) como de objetos (dinámico) mientras que en la arquitectura se le da más importancia a la vista de
+componentes y conectores (dinámica). Creemos que esto tiene que ver con que la arquitectura a gran escala se puede apreciar de manera más simple cuando vemos
+cómo estarán los componentes ``en funcionamiento''.
+
+Otra característica distintiva, aunque quizás sea un sesgo de parte de las metodologías usadas, es que la programación a pequeña escala está más orientada
+a cumplir con atributos funcionales, mientras en que la programación a gran escala hay que darle mucha más relevancia a cuestiones no funcionales. Esto podría explicarse
+si pensamos que en geneneral los productos más grandes son los que tienen más riesgos asociados relacionados con escalabilidad, seguridad, performance, etc.
+
+Desde el punto de vista específico de la realización del trabajo, encontramos dificultades para diferenciar el análisis de riesgos de los atributos de calidad.
+En mayor o menor medida, descubrimos que la mayoría de los atributos de calidad tienen algún riesgo relacionado (y viceversa), por lo que por momentos nos 
+parecía redundante realizar ambos análisis. Quizás la diferencia se nota mejor en un proyecto real con stakeholders reales en el cual el análisis de riesgos
+precede temporalmente a la documentación de atributos de calidad, pero de todos modos encontramos muchos puntos comunes a ambos análisis.
