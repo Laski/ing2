@@ -17,7 +17,7 @@
     \item \textbf{Descripción}: Es importante la disponibilidad constante del servicio, sin embargo se sabe que la red pública no tiene un 100\% de cobertura en el territorio del país, además de que pueden presentarse problemas de conectividad (por ejemplo, zona patagónica).
     \item \textbf{Probabilidad}: Media
     \item \textbf{Impacto}: Alto
-    \item \textbf{Exposición}: Media
+    \item \textbf{Exposición}: Alta
     \item \textbf{Mitigación}: Permitir la carga manual de datos por parte de los consultores y usuarios. En los casos en que los drones no tengan conectividad, implementar la descarga offline de los dispositivos en alguno de los nodos distribuidos de ArSat, información que luego se replicará por todo el sistema.
     \item \textbf{Plan de Contingencia}: Contratar servicios satelitales privados que provean conectividad por fuera del Estado / telefónicas locales.
 \end{itemize}
@@ -38,7 +38,7 @@
     \item \textbf{Descripción}: Todos los datos de seguimiento deben estar almacenados de forma segura y confidencial para evitar vulneraciones por parte de la competencia u otros atacantes.
     \item \textbf{Probabilidad}: Baja
     \item \textbf{Impacto}: Medio
-    \item \textbf{Exposición}: Media
+    \item \textbf{Exposición}: Baja
     \item \textbf{Mitigación}: Encriptar todos los datos almacenados y comunicación entre los nodos. Revestir los protocolos de autenticación y autorización de usuarios, por ejemplo agregando \textit{2-step verification}.
     \item \textbf{Plan de Contingencia}: Ante la detección de intromisiones aislar los datasources interrumpiendo su conexión con el resto del sistema hasta tanto se solucione el problema.
 \end{itemize}
@@ -48,8 +48,8 @@
 \begin{itemize} \itemsep -2pt
     \item \textbf{Descripción}: No se quiere que la cantidad de información almacenada sea un problema. Existe la posibilidad de que debido al volumen de datos obtenido de distintas fuentes se colapse el almacenamiento o se ralentice el uso de BigCherry.
     \item \textbf{Probabilidad}: Alta
-    \item \textbf{Impacto}: Alto	
-    \item \textbf{Exposición}: Baja
+    \item \textbf{Impacto}: Medio	
+    \item \textbf{Exposición}: Alta
     \item \textbf{Mitigación}: Comprimir los datos almacenados utilizando estructuras eficientes. Guardar muestras significativas de un período de tiempo y eliminar redundancias si no hubo cambios entre distintas fotografías. Utilizar una infraestructura de nodos distribuidos por todo el país para minimizar los tiempos de acceso según ubicación geográfica.
     \item \textbf{Plan de Contingencia}: En el caso de que el almacenamiento colapsara contratar datacenters externos (como Amazon) e integrarlos hasta que se logre escalar la infraestructura local.
 \end{itemize}
